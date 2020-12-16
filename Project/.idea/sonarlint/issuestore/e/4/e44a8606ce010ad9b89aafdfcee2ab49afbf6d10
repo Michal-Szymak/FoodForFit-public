@@ -1,0 +1,24 @@
+
+U
+java:S1128"8Remove this unused import 'kong.unirest.json.JSONArray'.(Ã¦®8é»æ.
+M
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8€ğñºæ.
+b
+java:S1854"@Remove this useless assignment to local variable "objectMapper".(¡ôó‰ùÿÿÿÿ8âİ»æ.
+L
+java:S1128"/Remove this unused import 'java.util.Iterator'.(¥ÍòÕ8ö…²»æ.
+U	java:S106"9Replace this use of System.out or System.err by a logger.(ş¬êÑ8Å–“»æ.
+S
+java:S1481"1Remove this unused "objectMapper" local variable.(¡ôó‰ùÿÿÿÿ8âİ»æ.
+]	java:S125!"<This block of commented-out lines of code should be removed.(°Ö¯ûÿÿÿÿ8ìĞÖ¸æ.
+0
+java:S1220""Move this file to a named package.
+B
+java:S1068"%Remove this unused "a" private field.(Â®Ç°8õú§¹æ.
+C
+java:S1068"&Remove this unused "a1" private field.(ş¹÷Î8Ğª¥¹æ.
+[
+java:S1128"9Remove this unused import 'kong.unirest.json.JSONObject'.(ÌÎ©Éøÿÿÿÿ8İ ¼ºæ.
+q
+java:S1128"ORemove this unused import 'com.fasterxml.jackson.core.JsonProcessingException'.(ßÔïÇûÿÿÿÿ8âİ»æ.
+U	java:S106"9Replace this use of System.out or System.err by a logger.(ôË‰8ñÕÇ»æ.
