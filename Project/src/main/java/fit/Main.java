@@ -15,7 +15,7 @@ public class Main {
         myRequest.addSearchCriteria("nutrients%5BFAT%5D", "40-50");
         myRequest.addSearchCriteria("nutrients%5BPROCNT%5D", "50%2B");
         myRequest.setFirst(2);
-        myRequest.setLast(7);
+        myRequest.setLast(75);
 
         List<String> responseList = new ArrayList<>();
         responseList = RequestComunicator.getResponse(myRequest);
