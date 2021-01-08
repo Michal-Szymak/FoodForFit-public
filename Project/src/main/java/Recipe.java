@@ -1,4 +1,3 @@
-import java.util.List;
 import java.util.Map;
 
 public class Recipe {
@@ -7,16 +6,18 @@ public class Recipe {
     int calories;
     int caloriesPer100g;
     int totalWeight;
+    int yield;
 
     Map<String, String[]> mapOfLabels;
     Map<String,Integer> mapOfNutrients;
 
     public Recipe(String name, int calories, int totalWeight
-            , Map<String,Integer> mapOfNutrients
+            , int yield, Map<String, Integer> mapOfNutrients
             , Map<String, String[]> mapOfLabels) {
         this.name = name;
         this.calories = calories;
         this.totalWeight = totalWeight;
+        this.yield = yield;
         this.mapOfNutrients = mapOfNutrients;
         this.mapOfLabels = mapOfLabels;
 
@@ -31,6 +32,7 @@ public class Recipe {
                 .append(name +
                         " : calories=" + calories +
                         ", caloriesPer100g=" + caloriesPer100g +
+                        ", yield=" + yield +
                         ", totalWeight=" + totalWeight)
                 ;
         sb.append(System.lineSeparator());

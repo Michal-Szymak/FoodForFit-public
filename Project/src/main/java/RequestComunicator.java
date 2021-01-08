@@ -28,10 +28,10 @@ public class RequestComunicator {
 
     private static String getRequestParametersAsString(Request request) {
         StringBuilder result = new StringBuilder();
-        for(Map.Entry<String, String> entry : request.getSearchCriteria().entrySet()){
-            result.append(entry.getKey());
+        for(RequestParameter r : request.getSearchCriteria()){
+            result.append(r.getKey());
             result.append("=");
-            result.append(entry.getValue());
+            result.append(r.getValue());
             result.append("&");
         }
         return result.toString();
