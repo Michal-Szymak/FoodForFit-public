@@ -1,3 +1,5 @@
+package fit;
+
 import java.util.Map;
 
 public class Recipe {

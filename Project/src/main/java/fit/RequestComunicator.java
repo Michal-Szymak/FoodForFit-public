@@ -1,10 +1,11 @@
+package fit;
+
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class RequestComunicator {
 

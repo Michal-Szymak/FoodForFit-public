@@ -1,8 +1,8 @@
+import fit.Parser;
+import fit.Recipe;
 import org.junit.jupiter.api.Test;
-import org.assertj.core.api.AutoCloseableSoftAssertions;
-import org.assertj.core.api.SoftAssertions;
+
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ParserTest {
 
