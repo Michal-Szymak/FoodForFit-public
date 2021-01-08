@@ -53,4 +53,8 @@ public class Recipe {
         sb.append(System.lineSeparator());
         return sb.toString();
     }
+
+    public int getCaloriesPerMeal() {
+        return calories/yield;
+    }
 }

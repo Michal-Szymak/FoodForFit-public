@@ -24,6 +24,9 @@ public class Main {
         for (String s : responseList) {
             recipeList.add(Parser.recipeParser(s));
         }
-        recipeList.forEach(System.out::println);
+        for (Recipe recipe : recipeList){
+            System.out.println(recipe);
+            System.out.println(new Meal(recipe));
+        }
     }
 }
