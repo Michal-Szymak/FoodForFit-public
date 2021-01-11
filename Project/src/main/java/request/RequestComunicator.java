@@ -1,4 +1,4 @@
-package fit;
+package request;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
