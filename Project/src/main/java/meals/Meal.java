@@ -3,7 +3,7 @@ package meals;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Meal {
+public class Meal implements IngredientsCollector{
     Recipe recipe;
 
     public Meal(Recipe recipe) {
@@ -13,6 +13,7 @@ public class Meal {
     public int getCalories(){
         return recipe.getCaloriesPerMeal();
     }
+
     public Map<String,Integer> getMapOfNutrients(){
         Map<String,Integer> map = new HashMap<>();
         for (String s : recipe.mapOfNutrients.keySet()){
