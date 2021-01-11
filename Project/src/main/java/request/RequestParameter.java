@@ -1,4 +1,4 @@
-package fit;
+package request;
 
 public class RequestParameter {
     public String key;

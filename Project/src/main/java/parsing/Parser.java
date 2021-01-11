@@ -1,4 +1,6 @@
-package fit;
+package parsing;
+
+import meals.Recipe;
 
 import java.util.HashMap;
 import java.util.Map;

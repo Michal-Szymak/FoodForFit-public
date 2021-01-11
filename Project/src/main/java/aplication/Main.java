@@ -1,4 +1,10 @@
-package fit;
+package aplication;
+
+import meals.Meal;
+import meals.Recipe;
+import parsing.Parser;
+import request.Request;
+import request.RequestComunicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +20,8 @@ public class Main {
         myRequest.addSearchCriteria("nutrients%5BCHOCDF%5D", "2");
         myRequest.addSearchCriteria("nutrients%5BFAT%5D", "40-50");
         myRequest.addSearchCriteria("nutrients%5BPROCNT%5D", "50%2B");
-        myRequest.setFirst(2);
-        myRequest.setLast(75);
+        myRequest.setFirst(1);
+        myRequest.setLast(10);
 
         List<String> responseList = new ArrayList<>();
         responseList = RequestComunicator.getResponse(myRequest);

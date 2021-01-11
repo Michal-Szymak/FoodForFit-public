@@ -1,9 +1,9 @@
-package fit;
+package request;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class Request {
+public class Request {
     private List<RequestParameter> searchCriteria = new ArrayList<>();
     private int first = 0;
     private int last = 10;

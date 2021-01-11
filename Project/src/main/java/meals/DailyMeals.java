@@ -1,4 +1,4 @@
-package fit;
+package meals;
 
 import java.util.List;
 
