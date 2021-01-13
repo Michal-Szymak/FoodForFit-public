@@ -16,6 +16,14 @@ public class User {
         this.age = age;
     }
 
+    public void addHealthLabelToPreferences(HealthLabel healthLabel){
+        preferences.getAlergy().add(healthLabel);
+    }
+
+    public void addDietLabelToPreferences(DietLabel dietLabel){
+        preferences.getDietLabel().add(dietLabel);
+    }
+
 
 
     public String getName() {
