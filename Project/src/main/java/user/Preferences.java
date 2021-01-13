@@ -4,18 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Preferences {
-    private List<HealthLabel> alergy = new ArrayList<>();
-    private List<DietLabel> dietLabel = new ArrayList<>();
+    private List<HealthLabel> allergies = new ArrayList<>();
+    private List<DietLabel> dietLabels = new ArrayList<>();
 
     private int countMealsPerDay;
     private int countColouriesPerDay;
 
-    public List<HealthLabel> getAlergy() {
-        return alergy;
+    public void addHealthLabelToPreferences(HealthLabel healthLabel){
+        allergies.add(healthLabel);
     }
 
-    public List<DietLabel> getDietLabel() {
-        return dietLabel;
+    public void addDietLabelToPreferences(DietLabel dietLabel){
+        dietLabels.add(dietLabel);
+    }
+
+    public List<HealthLabel> getAllergies() {
+        return allergies;
+    }
+
+    public List<DietLabel> getDietLabels() {
+        return dietLabels;
     }
 
     public int getCountMealsPerDay() {
