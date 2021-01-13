@@ -10,6 +10,8 @@ public class DailyMeals implements IngredientsCollector{
     public DailyMeals() {
     }
 
+
+
     public DailyMeals(List<Meal> mealList) {
         this.mealList = mealList;
     }
@@ -27,5 +29,14 @@ public class DailyMeals implements IngredientsCollector{
             cal += meal.getCalories();
         }
         return cal;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder text = new StringBuilder();
+        for (int i = 0; i < mealList.size(); i++) {
+            text.append(mealList.get(i).recipe.name + ", ");
+        }
+        return text.toString();
     }
 }

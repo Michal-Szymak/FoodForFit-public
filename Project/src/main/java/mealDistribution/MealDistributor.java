@@ -31,6 +31,7 @@ public class MealDistributor {
             DailyMeals day = new DailyMeals();
             for (int j = 0; j < preferences.getCountMealsPerDay(); j++) {
                 Meal meal = mealList.get(j);
+                mealList.remove(j);
                 if (((meal.getCalories() > (calPerDay - 100)) || (meal.getCalories() < (calPerDay + 100)))){
                     day.addMeal(meal);
                 } else j--;
