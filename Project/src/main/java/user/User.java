@@ -7,7 +7,6 @@ public class User {
     private int age;
     private Preferences preferences;
 
-
     public User() {
     }
 
