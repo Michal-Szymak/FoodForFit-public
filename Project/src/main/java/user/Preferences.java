@@ -26,11 +26,4 @@ public class Preferences {
         return dietLabels;
     }
 
-    public int getCountMealsPerDay() {
-        return countMealsPerDay;
-    }
 
-    public int getCountColouriesPerDay() {
-        return countColouriesPerDay;
-    }
-}
