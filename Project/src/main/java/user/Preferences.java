@@ -10,11 +10,11 @@ public class Preferences {
     private int countMealsPerDay;
     private int countColouriesPerDay;
 
-    public void addHealthLabelToPreferences(HealthLabel healthLabel){
+    public void addHealthLabelToPreferences(HealthLabel healthLabel) {
         allergies.add(healthLabel);
     }
 
-    public void addDietLabelToPreferences(DietLabel dietLabel){
+    public void addDietLabelToPreferences(DietLabel dietLabel) {
         dietLabels.add(dietLabel);
     }
 
@@ -25,5 +25,14 @@ public class Preferences {
     public List<DietLabel> getDietLabels() {
         return dietLabels;
     }
+
+    public int getCountMealsPerDay() {
+        return countMealsPerDay;
+    }
+
+    public int getCountColouriesPerDay() {
+        return countColouriesPerDay;
+    }
+}
 
 
