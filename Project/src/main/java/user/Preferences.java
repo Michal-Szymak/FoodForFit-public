@@ -10,4 +10,11 @@ public class Preferences {
     private int countMealsPerDay;
     private int countColouriesPerDay;
 
+    public int getCountMealsPerDay() {
+        return countMealsPerDay;
+    }
+
+    public int getCountColouriesPerDay() {
+        return countColouriesPerDay;
+    }
 }

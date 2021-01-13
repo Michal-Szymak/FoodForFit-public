@@ -9,7 +9,7 @@ public class WeeklyMeals implements IngredientsCollector{
 
     public WeeklyMeals() {
     }
-    void addDailyMeals(DailyMeals dailyMeals){
+    public void addDailyMeals(DailyMeals dailyMeals){
         weeklyMeals.add(dailyMeals);
     }
 

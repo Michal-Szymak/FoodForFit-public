@@ -18,10 +18,10 @@ public class DailyMeals implements IngredientsCollector{
         mealList.forEach(x -> list.addAll(Arrays.asList(x.getIngredients())));
         return list.toArray(new String[0]);
     }
-    void addMeal(Meal meal){
+    public void addMeal(Meal meal){
         mealList.add(meal);
     }
-    int getCalories(){
+    public int getCalories(){
         int cal = 0;
         for (Meal meal : mealList) {
             cal += meal.getCalories();
