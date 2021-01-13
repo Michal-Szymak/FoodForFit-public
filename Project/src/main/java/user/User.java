@@ -7,7 +7,6 @@ public class User {
     private int age;
     private Preferences preferences;
 
-
     public User() {
     }
 
@@ -16,7 +15,6 @@ public class User {
         this.gender = gender;
         this.age = age;
     }
-
 
 
     public String getName() {
