@@ -10,6 +10,11 @@ public class Preferences {
     private int countMealsPerDay;
     private int countColouriesPerDay;
 
+    public Preferences(int countMealsPerDay, int countColouriesPerDay) {
+        this.countMealsPerDay = countMealsPerDay;
+        this.countColouriesPerDay = countColouriesPerDay;
+    }
+
     public int getCountMealsPerDay() {
         return countMealsPerDay;
     }

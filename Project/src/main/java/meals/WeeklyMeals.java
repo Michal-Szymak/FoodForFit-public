@@ -7,7 +7,7 @@ import java.util.List;
 public class WeeklyMeals implements IngredientsCollector{
 
 
-    List<DailyMeals> weeklyMeals;
+    List<DailyMeals> weeklyMeals = new ArrayList<>();
 
     public WeeklyMeals() {
     }
