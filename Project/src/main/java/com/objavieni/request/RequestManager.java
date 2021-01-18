@@ -1,4 +1,4 @@
-package request;
+package com.objavieni.request;
 
 import org.apache.http.client.utils.URIBuilder;
 

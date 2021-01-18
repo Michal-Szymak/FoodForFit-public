@@ -1,10 +1,10 @@
-package aplication;
+package com.objavieni.aplication;
 
-import meals.Meal;
-import meals.Recipe;
-import parsing.Parser;
-import request.Request;
-import request.RequestManager;
+import com.objavieni.meals.Meal;
+import com.objavieni.meals.Recipe;
+import com.objavieni.parsing.Parser;
+import com.objavieni.request.Request;
+import com.objavieni.request.RequestManager;
 
 import java.util.ArrayList;
 import java.util.List;

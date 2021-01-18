@@ -1,4 +1,4 @@
-package request;
+package com.objavieni.request;
 
 public class RequestParameter {
     public String key;

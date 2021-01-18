@@ -1,10 +1,10 @@
-package mealDistribution;
+package com.objavieni.mealDistribution;
 
-import meals.DailyMeals;
-import meals.Meal;
-import meals.Recipe;
-import meals.WeeklyMeals;
-import user.Preferences;
+import com.objavieni.meals.DailyMeals;
+import com.objavieni.meals.Meal;
+import com.objavieni.meals.Recipe;
+import com.objavieni.meals.WeeklyMeals;
+import com.objavieni.user.Preferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class MealDistributor {
     }
 
     public void distribute(){
-        int calPerDay = preferences.getCountColouriesPerDay() / preferences.getCountMealsPerDay();
+        int calPerDay = preferences.getCountCaloriesPerDay()/preferences.getCountMealsPerDay();
         for (int i = 1; i <= 7; i++) {
             DailyMeals day = new DailyMeals();
             for (int j = 0; j < preferences.getCountMealsPerDay(); j++) {
