@@ -1,6 +1,6 @@
-package parsing;
+package com.objavieni.parsing;
 
-import meals.Recipe;
+import com.objavieni.meals.Recipe;
 
 import java.util.HashMap;
 import java.util.Map;

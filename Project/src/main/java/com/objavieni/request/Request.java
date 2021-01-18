@@ -1,11 +1,10 @@
-package request;
+package com.objavieni.request;
 
-import user.DietLabel;
-import user.HealthLabel;
-import user.Preferences;
+import com.objavieni.user.DietLabel;
+import com.objavieni.user.HealthLabel;
+import com.objavieni.user.Preferences;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Request {

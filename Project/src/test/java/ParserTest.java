@@ -1,5 +1,5 @@
-import parsing.Parser;
-import meals.Recipe;
+import com.objavieni.parsing.Parser;
+import com.objavieni.meals.Recipe;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;

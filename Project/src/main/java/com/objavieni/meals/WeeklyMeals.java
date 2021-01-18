@@ -1,4 +1,4 @@
-package meals;
+package com.objavieni.meals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
