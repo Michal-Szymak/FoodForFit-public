@@ -4,7 +4,7 @@ import meals.Meal;
 import meals.Recipe;
 import parsing.Parser;
 import request.Request;
-import request.RequestComunicator;
+import request.RequestManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class Main {
         myRequest.setLast(10);
 
         List<String> responseList = new ArrayList<>();
-        responseList = RequestComunicator.getResponse(myRequest);
+        responseList = RequestManager.getResponse(myRequest);
 
         List<Recipe> recipeList = new ArrayList<>();
         for (String s : responseList) {

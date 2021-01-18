@@ -43,7 +43,8 @@ public class Recipe {
             sb.append(s + " : " + mapOfNutrients.get(s) + System.lineSeparator());
         }
         for (String s : mapOfLabels.keySet()) {
-            sb.append(s + ": ");
+//            sb.append(s + ": ");
+            sb.append(s + ": " + mapOfLabels.get(s).length + " ");
             String[] tab = mapOfLabels.get(s);
             for (String s2 : tab) {
                 sb.append(s2);

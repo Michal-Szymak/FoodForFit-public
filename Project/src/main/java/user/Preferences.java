@@ -8,7 +8,8 @@ public class Preferences {
     private List<DietLabel> dietLabels = new ArrayList<>();
 
     private int countMealsPerDay;
-    private int countColouriesPerDay;
+    private int countCaloriesPerDay;
+
 
     public void addHealthLabelToPreferences(HealthLabel healthLabel) {
         allergies.add(healthLabel);
@@ -30,9 +31,7 @@ public class Preferences {
         return countMealsPerDay;
     }
 
-    public int getCountColouriesPerDay() {
-        return countColouriesPerDay;
+    public int getCountCaloriesPerDay() {
+        return countCaloriesPerDay;
     }
 }
-
-
