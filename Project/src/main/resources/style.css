@@ -1,0 +1,17 @@
+.center {
+    width: 1000px;
+    margin: 0 auto;
+}
+.mynav {
+    color: aliceblue;
+    text-decoration: none;
+    background-color: forestgreen;
+
+}
+.image {
+    width: 180px;
+    height: 180px;
+    float: left;
+    border: 5px;
+
+}
