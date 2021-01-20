@@ -3,7 +3,7 @@ package com.objavieni.meals;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Meal implements IngredientsCollector{
+public class Meal{
     Recipe recipe;
 
     public Meal(Recipe recipe) {
@@ -16,26 +16,42 @@ public class Meal implements IngredientsCollector{
 
     public Map<String,Integer> getMapOfNutrients(){
         Map<String,Integer> map = new HashMap<>();
-        for (String s : recipe.mapOfNutrients.keySet()){
-            map.put(s,recipe.mapOfNutrients.get(s)/ recipe.yield);
+        for (String s : recipe.getMapOfNutrients().keySet()){
+            map.put(s,recipe.getMapOfNutrients().get(s)/ recipe.getYield());
         }
         return map;
     }
     public String[] getHealthLabels(){
-        return recipe.mapOfLabels.get("Health Labels");
+        return recipe.getMapOfLabels().get("Health Labels");
     }
     public String[] getDietLabels(){
-        return recipe.mapOfLabels.get("Diet Labels");
+        return recipe.getMapOfLabels().get("Diet Labels");
     }
     public String[] getIngredients(){
-        return recipe.mapOfLabels.get("Ingredients");
+        return recipe.getMapOfLabels().get("Ingredients");
     }
 
     @Override
     public String toString() {
-        return "Meal : " + recipe.name
+        return "Meal : " + recipe.getName()
                 + ", calories = "
                 + getCalories() + ", nutrients : "
                 + getMapOfNutrients();
+    }
+    public Boolean isInCaloricDiff(int caloriesDiff,int caloriesPerDay){
+        if ((getCalories() > (caloriesPerDay - caloriesDiff)) && (getCalories() < (caloriesPerDay + caloriesDiff))){
+            return true;
+        }
+        return false;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+    public String getName(){
+        return recipe.getName();
+    }
+    public String getImageSource(){
+        return  recipe.getImgSrc();
     }
 }

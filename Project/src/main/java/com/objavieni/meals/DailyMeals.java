@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DailyMeals implements IngredientsCollector{
-    List<Meal> mealList = new ArrayList<>();
+public class DailyMeals{
+    private List<Meal> mealList = new ArrayList<>();
 
     public DailyMeals() {
     }
@@ -15,7 +15,7 @@ public class DailyMeals implements IngredientsCollector{
     public DailyMeals(List<Meal> mealList) {
         this.mealList = mealList;
     }
-    public String[] getIngredients(){
+    public String[] getDailyIngredients(){
         List<String> list = new ArrayList<>();
         mealList.forEach(x -> list.addAll(Arrays.asList(x.getIngredients())));
         return list.toArray(new String[0]);
@@ -35,8 +35,12 @@ public class DailyMeals implements IngredientsCollector{
     public String toString() {
         StringBuilder text = new StringBuilder();
         for (int i = 0; i < mealList.size(); i++) {
-            text.append(mealList.get(i).recipe.name + ", ");
+            text.append(mealList.get(i).recipe.getName() + ", ");
         }
         return text.toString();
+    }
+
+    public List<Meal> getMealList() {
+        return mealList;
     }
 }

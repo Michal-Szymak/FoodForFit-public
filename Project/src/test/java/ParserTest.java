@@ -12,7 +12,7 @@ class ParserTest {
         String text = "";
         Recipe recipe;
         //when
-        recipe = Parser.recipeParser(text);
+        recipe = new Parser().recipeParser(text);
         //then
         assertThat(recipe).isNotNull();
     }
@@ -22,7 +22,7 @@ class ParserTest {
         String text = null;
         Recipe recipe;
         //when
-        recipe = Parser.recipeParser(text);
+        recipe = new Parser().recipeParser(text);
         //then
         assertThat(recipe).isNull();
     }
