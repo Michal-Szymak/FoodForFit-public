@@ -10,21 +10,22 @@ import java.util.ArrayList;
 import java.util.List;
 @Slf4j
 public class RecipeService {
-    Request myRequest;
+    Request myRequest = new Request();
     Preferences userPreferences = new Preferences();
-    RequestManager requestManager;
+    RequestManager requestManager = new RequestManager();
     List<String> responseList;
     List<Recipe> recipeList = new ArrayList<>(1000);
 
     public RecipeService(Request myRequest, RequestManager requestManager) {
         this.myRequest = myRequest;
-        this.userPreferences = userPreferences;
+
         this.requestManager = requestManager;
         load();
         
     }
 
     public RecipeService() {
+        load();
     }
 
     public void load(){

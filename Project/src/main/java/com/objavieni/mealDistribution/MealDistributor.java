@@ -21,15 +21,14 @@ public class MealDistributor {
     private WeeklyMeals weeklyMeals;
 
     public MealDistributor(List<Recipe> recipeList, Preferences preferences) {
-
+log.info("loading preferendes to distributor");
         this.preferences = preferences;
+        log.info("loading recipes to meallist");
         this.mealList = recipesToMeals(recipeList);
+        log.info("distribute to weeklymeals");
         this.weeklyMeals = distribute();
     }
 
-    public MealDistributor() {
-
-    }
 
     private List<Meal> recipesToMeals(List<Recipe> recipeList) {
         List<Meal> mealList = new ArrayList<>();
@@ -52,9 +51,9 @@ public class MealDistributor {
         do {
             meal = mealList.get(startIndex);
             startIndex++;
-            log.info("meals until range : " + startIndex);
         }
         while (!meal.isInCaloricDiff(ACCEPTABLE_CALORIES_DIFF,caloriesPerDay));
+        log.info("meals until range : " + startIndex);
         for (int i = 1; i <= DAYS_IN_WEEK; i++) {
             DailyMeals day = new DailyMeals();
 
