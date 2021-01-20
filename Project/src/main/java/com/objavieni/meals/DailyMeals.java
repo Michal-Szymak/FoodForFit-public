@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DailyMeals implements IngredientsCollector{
-    List<Meal> mealList = new ArrayList<>();
+    private List<Meal> mealList = new ArrayList<>();
 
     public DailyMeals() {
     }
@@ -38,5 +38,9 @@ public class DailyMeals implements IngredientsCollector{
             text.append(mealList.get(i).recipe.name + ", ");
         }
         return text.toString();
+    }
+
+    public List<Meal> getMealList() {
+        return mealList;
     }
 }

@@ -38,4 +38,11 @@ public class Meal implements IngredientsCollector{
                 + getCalories() + ", nutrients : "
                 + getMapOfNutrients();
     }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+    public String getName(){
+        return recipe.name;
+    }
 }

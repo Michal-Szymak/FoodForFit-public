@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header class="center">
+    <div class="header center">
+        <ul class="nav mynav">
+            <li class="nav-item">
+                <a class="nav-link mynav" aria-current="page" href="#">MyProfile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mynav" href="#">MyDiet Settings</a>
+            </li>
+
+
+        </ul>
+    </div>
+</header>
+<section>
+    asdasd
+
+    <table>
+        <tr th:each="dailyMeal : ${weeklyMeals}">
+
+        <td th:each="meal : ${dailyMeal.getMealList()}">
+            <div th:text="${meal.getName()}"></div>
+        </td>
+         </tr>
+    </table>
+</section>
+
+</body>
+</html>

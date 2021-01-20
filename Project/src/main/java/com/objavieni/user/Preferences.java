@@ -10,6 +10,13 @@ public class Preferences {
     private int countMealsPerDay;
     private int countCaloriesPerDay;
 
+    public void setCountMealsPerDay(int countMealsPerDay) {
+        this.countMealsPerDay = countMealsPerDay;
+    }
+
+    public void setCountCaloriesPerDay(int countCaloriesPerDay) {
+        this.countCaloriesPerDay = countCaloriesPerDay;
+    }
 
     public void addHealthLabelToPreferences(HealthLabel healthLabel) {
         allergies.add(healthLabel);

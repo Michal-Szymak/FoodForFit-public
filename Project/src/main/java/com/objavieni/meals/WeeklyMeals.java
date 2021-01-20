@@ -9,6 +9,8 @@ public class WeeklyMeals implements IngredientsCollector{
 
     List<DailyMeals> weeklyMeals = new ArrayList<>();
 
+
+
     public WeeklyMeals() {
     }
     public void addDailyMeals(DailyMeals dailyMeals){
@@ -23,10 +25,14 @@ public class WeeklyMeals implements IngredientsCollector{
 
     @Override
     public String toString() {
+        if(weeklyMeals.isEmpty())return "empty list";
         StringBuilder text = new StringBuilder();
         for (int i = 0; i < weeklyMeals.size(); i++) {
             text.append("\nDay " + i + " : " + weeklyMeals.get(i).toString() );
         }
         return text.toString();
+    }
+    public List<DailyMeals> getWeeklyMeals() {
+        return weeklyMeals;
     }
 }
