@@ -11,24 +11,27 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MyConfiguration {
 
-    @Bean
-    public Request getRequest(){
-        return new Request();
-    }
-    @Bean
-    public Preferences getPreferences(){
-        return new Preferences();
-    }
-    @Bean
-    public RequestManager getRequestManager(){
-        return new RequestManager();
-    }
-    @Bean
-    public RecipeService getRecipeService(){
-        return new RecipeService(getRequest(),getPreferences(),getRequestManager());
-    }
-    @Bean
-    public MealDistributor getMealDistributor(){
-        return new MealDistributor(getRecipeService().getRecipeList(),getPreferences());
-    }
+//    @Bean
+//    public Request getRequest() {
+//        return new Request();
+//    }
+//
+////    @Bean
+//    public Preferences getPreferences() {
+//        return new Preferences();
+//    }
+
+//    @Bean
+//    public RequestManager getRequestManager() {
+//        return new RequestManager();
+//    }
 }
+//    @Bean
+//    public RecipeService getRecipeService(){
+//        return new RecipeService(getRequest(),getPreferences(),getRequestManager());
+//    }
+//    @Bean
+//    public MealDistributor getMealDistributor(){
+//        return new MealDistributor(getRecipeService().getRecipeList(),getPreferences());
+//    }
+//}
