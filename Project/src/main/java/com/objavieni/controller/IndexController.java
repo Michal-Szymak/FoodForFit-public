@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
 import java.util.List;
 
 @Controller
@@ -70,9 +73,22 @@ public class IndexController {
     public String getProfile(Model model){
         return "profile";
     }
+
     @GetMapping("/diet")
     public String getDiet(Model model){
+        model.addAttribute("preferences",new Preferences());
         return "diet";
+    }
+    @PostMapping("savePreferences")
+    public String savePreferences(@ModelAttribute Preferences preferences){
+        this.preferences = preferences;
+        preferences.addDietLabelToPreferences(DietLabel.LOW_CARB);
+        preferences.addHealthLabelToPreferences(HealthLabel.KETO);
+        user = setUser(preferences);
+        recipeService = setRecipeService(preferences);
+        mealDistributor = setMealDistributor(recipeService.getRecipeList(),preferences);
+
+        return "redirect:calendar";
     }
 
 }
