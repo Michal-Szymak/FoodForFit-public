@@ -4,16 +4,17 @@ import java.util.Map;
 
 public class Recipe {
 
-    String name;
-    int calories;
-    int caloriesPer100g;
-    int totalWeight;
-    int yield;
+    private String name;
+    private int calories;
+    private int caloriesPer100g;
+    private int totalWeight;
+    private int yield;
+    private String imgSrc;
 
-    Map<String, String[]> mapOfLabels;
-    Map<String,Integer> mapOfNutrients;
+    private Map<String, String[]> mapOfLabels;
+    private Map<String,Integer> mapOfNutrients;
 
-    public Recipe(String name, int calories, int totalWeight
+    public Recipe(String imgSrc,String name, int calories, int totalWeight
             , int yield, Map<String, Integer> mapOfNutrients
             , Map<String, String[]> mapOfLabels) {
         this.name = name;
@@ -22,7 +23,7 @@ public class Recipe {
         this.yield = yield;
         this.mapOfNutrients = mapOfNutrients;
         this.mapOfLabels = mapOfLabels;
-
+        this.imgSrc = imgSrc;
         caloriesPer100g = (int) ((calories / (totalWeight / 100.0)) + 0.5);
     }
 
@@ -53,6 +54,26 @@ public class Recipe {
         }
         sb.append(System.lineSeparator());
         return sb.toString();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getYield() {
+        return yield;
+    }
+
+    public Map<String, String[]> getMapOfLabels() {
+        return mapOfLabels;
+    }
+
+    public Map<String, Integer> getMapOfNutrients() {
+        return mapOfNutrients;
+    }
+
+    public String getImgSrc() {
+        return imgSrc;
     }
 
     public int getCaloriesPerMeal() {

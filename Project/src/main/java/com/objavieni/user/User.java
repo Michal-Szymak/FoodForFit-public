@@ -10,10 +10,11 @@ public class User {
     public User() {
     }
 
-    public User(String name, Gender gender, int age) {
+    public User(String name, Gender gender, int age, Preferences preferences) {
         this.name = name;
         this.gender = gender;
         this.age = age;
+        this.preferences = preferences;
     }
 
 

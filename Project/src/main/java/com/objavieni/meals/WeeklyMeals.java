@@ -4,35 +4,35 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class WeeklyMeals implements IngredientsCollector{
+public class WeeklyMeals{
 
 
-    List<DailyMeals> weeklyMeals = new ArrayList<>();
+    private List<DailyMeals> dailyMealsList = new ArrayList<>();
 
 
 
     public WeeklyMeals() {
     }
     public void addDailyMeals(DailyMeals dailyMeals){
-        weeklyMeals.add(dailyMeals);
+        dailyMealsList.add(dailyMeals);
     }
 
     public String[] getIngredients(){
         List<String> list = new ArrayList<>();
-        weeklyMeals.forEach(x -> list.addAll(Arrays.asList(x.getIngredients())));
+        dailyMealsList.forEach(x -> list.addAll(Arrays.asList(x.getDailyIngredients())));
         return list.toArray(new String[0]);
     }
 
     @Override
     public String toString() {
-        if(weeklyMeals.isEmpty())return "empty list";
+        if(dailyMealsList.isEmpty())return "empty list";
         StringBuilder text = new StringBuilder();
-        for (int i = 0; i < weeklyMeals.size(); i++) {
-            text.append("\nDay " + i + " : " + weeklyMeals.get(i).toString() );
+        for (int i = 0; i < dailyMealsList.size(); i++) {
+            text.append("\nDay " + i + " : " + dailyMealsList.get(i).toString() );
         }
         return text.toString();
     }
-    public List<DailyMeals> getWeeklyMeals() {
-        return weeklyMeals;
+    public List<DailyMeals> getDailyMealsList() {
+        return dailyMealsList;
     }
 }

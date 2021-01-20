@@ -30,15 +30,15 @@ public class Request {
         }
     }
 
-    private void addCaloriesMin (int min){
+    public void addCaloriesMin (int min){
         addSearchCriteria(CALORIES_KEY, String.valueOf(min+"%2B"));
     }
 
-    private void addCaloriesMax (int max){
+    public void addCaloriesMax (int max){
         addSearchCriteria(CALORIES_KEY, String.valueOf(max));
     }
 
-    private void addCaloriesMinMax (int min, int max){
+    public void addCaloriesMinMax (int min, int max){
         addSearchCriteria(CALORIES_KEY, String.valueOf(min) + "-" + String.valueOf(max));
     }
     

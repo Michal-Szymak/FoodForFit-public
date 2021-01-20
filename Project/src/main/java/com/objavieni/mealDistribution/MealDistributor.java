@@ -5,42 +5,70 @@ import com.objavieni.meals.Meal;
 import com.objavieni.meals.Recipe;
 import com.objavieni.meals.WeeklyMeals;
 import com.objavieni.user.Preferences;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Slf4j
 public class MealDistributor {
-    private List<Recipe> recipeList;
-    private List<Meal> mealList = new ArrayList<>();
+    public static final int DAYS_IN_WEEK = 7;
+    public static final int ACCEPTABLE_CALORIES_DIFF = 100;
+    private List<Meal> mealList;
     private Preferences preferences;
-    private WeeklyMeals weeklyMeals = new WeeklyMeals();
+    private WeeklyMeals weeklyMeals;
 
     public MealDistributor(List<Recipe> recipeList, Preferences preferences) {
-        this.recipeList = recipeList;
+
         this.preferences = preferences;
+        this.mealList = recipesToMeals(recipeList);
+        this.weeklyMeals = distribute();
+    }
+
+    public MealDistributor() {
+
+    }
+
+    private List<Meal> recipesToMeals(List<Recipe> recipeList) {
+        List<Meal> mealList = new ArrayList<>();
         for (Recipe recipe : recipeList) {
             mealList.add(new Meal(recipe));
         }
+        List<Meal> list = mealList.stream().sorted(Comparator.comparingInt(x -> x.getCalories())).collect(Collectors.toList());
+        return list;
     }
 
     public WeeklyMeals getWeeklyMeals() {
         return weeklyMeals;
     }
 
-    public void distribute(){
-        int calPerDay = preferences.getCountCaloriesPerDay()/preferences.getCountMealsPerDay();
-        for (int i = 1; i <= 7; i++) {
+    public WeeklyMeals distribute(){
+        WeeklyMeals weeklyMeals = new WeeklyMeals();
+        int caloriesPerDay = preferences.getCountCaloriesPerDay()/preferences.getCountMealsPerDay();
+        int startIndex = 0;
+        Meal meal;
+        do {
+            meal = mealList.get(startIndex);
+            startIndex++;
+            log.info("meals until range : " + startIndex);
+        }
+        while (!meal.isInCaloricDiff(ACCEPTABLE_CALORIES_DIFF,caloriesPerDay));
+        for (int i = 1; i <= DAYS_IN_WEEK; i++) {
             DailyMeals day = new DailyMeals();
+
             for (int j = 0; j < preferences.getCountMealsPerDay(); j++) {
-                Meal meal = mealList.get(j);
-                mealList.remove(j);
-                if (((meal.getCalories() > (calPerDay - 100)) || (meal.getCalories() < (calPerDay + 100)))){
-                    day.addMeal(meal);
-                } else j--;
+
+                Meal meal2 = mealList.get(j + startIndex);
+                mealList.remove(j + startIndex);
+                 day.addMeal(meal2);
+                    log.info("cal : " + meal2.getCalories() + ",  name : " + meal2.getName() + " /// added to day : " + i);
+
             }
             weeklyMeals.addDailyMeals(day);
         }
-
+        return weeklyMeals;
     }
 
 

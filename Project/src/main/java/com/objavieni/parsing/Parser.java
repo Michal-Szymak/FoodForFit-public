@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Parser {
 
-    public static Recipe recipeParser (String text){
+    public Recipe recipeParser (String text){
         if (text != null) {
             String label = getLabel(text, "label");
             int calories = getIntLabels(text, "calories");
@@ -16,6 +16,7 @@ public class Parser {
             int carbs = getIntLabels(text, "Carbs\",\"quantity");
             int protein = getIntLabels(text, "Protein\",\"quantity");
             int yield = getIntLabels(text,"yield");
+            String imgSrc = getLabel(text,"image");
 
             Map<String, Integer> mapOfNutrients = new HashMap<>();
             mapOfNutrients.put("Fat", fat);
@@ -31,7 +32,7 @@ public class Parser {
             mapOfLabels.put("Health Labels", arrayOfHealthLabels);
             mapOfLabels.put("Diet Labels", arrayOfDietLabels);
 
-            return new Recipe(label, calories, weight, yield, mapOfNutrients, mapOfLabels);
+            return new Recipe(imgSrc,label, calories, weight, yield, mapOfNutrients, mapOfLabels);
         }
         return null;
     }

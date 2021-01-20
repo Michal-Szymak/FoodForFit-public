@@ -10,6 +10,16 @@ public class Preferences {
     private int countMealsPerDay;
     private int countCaloriesPerDay;
 
+    public Preferences(List<HealthLabel> allergies, List<DietLabel> dietLabels, int countMealsPerDay, int countCaloriesPerDay) {
+        this.allergies = allergies;
+        this.dietLabels = dietLabels;
+        this.countMealsPerDay = countMealsPerDay;
+        this.countCaloriesPerDay = countCaloriesPerDay;
+    }
+
+    public Preferences() {
+    }
+
     public void setCountMealsPerDay(int countMealsPerDay) {
         this.countMealsPerDay = countMealsPerDay;
     }

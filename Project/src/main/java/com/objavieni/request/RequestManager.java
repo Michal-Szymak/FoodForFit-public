@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class RequestManager {
 
-    public static List<String> getResponse(Request request) {
+    public List<String> getResponse(Request request) {
         List<String> result = new ArrayList<>();
         Optional<HttpRequest> httpRequestOptional = createHttpRequest(request);
         if(httpRequestOptional.isPresent()) {
