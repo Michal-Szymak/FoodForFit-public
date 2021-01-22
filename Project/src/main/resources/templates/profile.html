@@ -23,5 +23,43 @@
     </div>
 </header>
 
+<section>
+    <div class = "container">
+        <table class="table table-striped" width="50%" >
+            <tr>
+                <td><h4>Name</h4></td>
+                <td th:text="${user.name}"></td>
+            </tr>
+            <tr>
+                <td><h4>Gender</h4></td>
+                <td th:text="${user.gender}"></td>
+            </tr>
+
+            <tr>
+                <td><h4>Age</h4></td>
+                <td th:text="${user.age}"></td>
+            </tr>
+
+            <tr>
+            <td><h4>Preferences</h4></td>
+            </tr>
+
+            <tr th:each="allergie: ${allergies}">
+                <td>Allergie</td>
+                <td th:text="${allergie}"></td>
+            </tr>
+
+            <tr th:each="dietLabel : ${dietLabels}">
+                <td>Diet</td>
+                <td th:text="${dietLabel}"></td>
+
+            </tr>
+
+        </table>
+    </div>
+
+
+</section>
+
 </body>
 </html>
