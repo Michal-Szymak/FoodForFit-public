@@ -58,11 +58,6 @@ public class IndexController {
         return mealDistributor;
     }
 
-
-
-
-
-
     @GetMapping("/calendar")
     public String getIndex(Model model){
 
@@ -72,6 +67,9 @@ public class IndexController {
     }
     @GetMapping("/profile")
     public String getProfile(Model model){
+        model.addAttribute("user", user);
+        model.addAttribute("dietLabels", preferences.getDietLabels());
+        model.addAttribute("allergies", preferences.getAllergies());
         return "profile";
     }
 
@@ -91,5 +89,7 @@ public class IndexController {
 
         return "redirect:calendar";
     }
+
+
 
 }
