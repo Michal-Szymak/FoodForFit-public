@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class RequestManager {
 
-    public List<String> getResponse(Request request) {
+    public static List<String> getResponse(Request request) {
         List<String> result = new ArrayList<>();
         Optional<HttpRequest> httpRequestOptional = createHttpRequest(request);
         if(httpRequestOptional.isPresent()) {
@@ -26,6 +26,9 @@ public class RequestManager {
             return Optional.of(result);
         } catch (URISyntaxException e) {
             System.out.println("URI Syntax Exception occurred");
+            return Optional.empty();
+        } catch (NullPointerException e) {
+            System.out.println("com.objavieni.request.Request object is null");
             return Optional.empty();
         }
     }

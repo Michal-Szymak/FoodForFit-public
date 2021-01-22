@@ -52,4 +52,13 @@ public class RecipeService {
     public void setUserPreferences(Preferences userPreferences) {
         this.userPreferences = userPreferences;
     }
+
+    public void setNumberOfRecipiesToBeDownloaded(int number){
+        myRequest.setLast(number);
+    }
+
+    public void setNumberOfRecipiesToBeDownloadedWithOffset(int number, int offset){
+        myRequest.setFirst(number);
+        myRequest.setLast(number + offset);
+    }
 }

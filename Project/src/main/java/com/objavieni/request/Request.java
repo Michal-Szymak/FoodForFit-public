@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Request {
     private static final String DIET_LABEL_KEY = "diet";
+    // "healt" is not a typo! This is query parameter defined in API
     private static final String HEALTH_LABEL_KEY = "healt";
     private static final String CALORIES_KEY = "calories";
     private List<RequestParameter> searchCriteria = new ArrayList<>();

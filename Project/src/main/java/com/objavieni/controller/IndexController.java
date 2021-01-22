@@ -45,6 +45,7 @@ public class IndexController {
         log.info("setting service");
         RecipeService recipeService = new RecipeService();
         recipeService.setUserPreferences(preferences);
+        recipeService.setNumberOfRecipiesToBeDownloaded(1000);
         log.info("service setted");
         return recipeService;
     }
