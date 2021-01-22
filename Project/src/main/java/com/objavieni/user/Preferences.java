@@ -51,4 +51,12 @@ public class Preferences {
     public int getCountCaloriesPerDay() {
         return countCaloriesPerDay;
     }
+
+    public void setAllergies(List<HealthLabel> allergies) {
+        this.allergies = allergies;
+    }
+
+    public void setDietLabels(List<DietLabel> dietLabels) {
+        this.dietLabels = dietLabels;
+    }
 }
