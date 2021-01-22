@@ -75,14 +75,19 @@ public class IndexController {
 
     @GetMapping("/diet")
     public String getDiet(Model model){
+        model.addAttribute("health",HealthLabel.values());
+        model.addAttribute("diet",DietLabel.values());
         model.addAttribute("preferences",new Preferences());
+
         return "diet";
     }
     @PostMapping("savePreferences")
     public String savePreferences(@ModelAttribute Preferences preferences){
         this.preferences = preferences;
+        log.info("preferences loaded  : " + preferences.getDietLabels() + "\n" + preferences.getAllergies() );
         preferences.addDietLabelToPreferences(DietLabel.LOW_CARB);
         preferences.addHealthLabelToPreferences(HealthLabel.KETO);
+        log.info("preferences loaded  : " + preferences.getDietLabels() + "\n" + preferences.getAllergies() );
         user = setUser(preferences);
         recipeService = setRecipeService(preferences);
         mealDistributor = setMealDistributor(recipeService.getRecipeList(),preferences);

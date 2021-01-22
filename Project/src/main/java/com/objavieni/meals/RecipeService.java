@@ -18,10 +18,8 @@ public class RecipeService {
 
     public RecipeService(Request myRequest, RequestManager requestManager) {
         this.myRequest = myRequest;
-
         this.requestManager = requestManager;
         load();
-        
     }
 
     public RecipeService() {
