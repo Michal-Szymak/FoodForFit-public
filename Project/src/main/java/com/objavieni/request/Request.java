@@ -6,20 +6,23 @@ import com.objavieni.user.Preferences;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Request {
     private static final String DIET_LABEL_KEY = "diet";
     // "healt" is not a typo! This is query parameter defined in API
     private static final String HEALTH_LABEL_KEY = "healt";
     private static final String CALORIES_KEY = "calories";
+    private static final int ACCEPTABLE_CALORIES_DIFFERENCE = 100;
     private List<RequestParameter> searchCriteria = new ArrayList<>();
-    private int first = 0;
-    private int last = 10;
+    // max 100 recipes in one request are allowed by API
+    private int recipesToDownload = 10;
+    private int offset = 0;
 
     public Request() {
         searchCriteria.add(new RequestParameter("app_id", "900da95e"));
         searchCriteria.add(new RequestParameter("app_key", "40698503668e0bb3897581f4766d77f9"));
-        searchCriteria.add(new RequestParameter("q",""));
+        searchCriteria.add(new RequestParameter("q", ""));
     }
 
     public void addUserPreferences(Preferences preferences) {
@@ -29,45 +32,61 @@ public class Request {
         for (DietLabel dietLabel : preferences.getDietLabels()) {
             addSearchCriteria(DIET_LABEL_KEY, dietLabel.getDescription());
         }
+        int caloriesPerMeal = preferences.getCountCaloriesPerDay() / preferences.getCountMealsPerDay();
+        addCalories(caloriesPerMeal, ACCEPTABLE_CALORIES_DIFFERENCE);
     }
 
-    public void addCaloriesMin (int min){
-        addSearchCriteria(CALORIES_KEY, String.valueOf(min+"%2B"));
+    private void addCaloriesMin(int min) {
+        addSearchCriteria(CALORIES_KEY, String.valueOf(min + "%2B"));
     }
 
-    public void addCaloriesMax (int max){
+    private void addCaloriesMax(int max) {
         addSearchCriteria(CALORIES_KEY, String.valueOf(max));
     }
 
-    public void addCaloriesMinMax (int min, int max){
+    private void addCalories(int expectedCalories, int acceptableDifference) {
+        String queryValue = (expectedCalories - acceptableDifference) + "-" + (expectedCalories + acceptableDifference);
+        removeOldCaloriesRequestParameter();
+        addSearchCriteria(CALORIES_KEY, queryValue);
+    }
+
+    private void removeOldCaloriesRequestParameter() {
+        Optional<Integer> caloriesParameterIndex = searchCriteria.stream()
+                .filter(requestParameter -> requestParameter.getKey().equals(CALORIES_KEY))
+                .map(requestParameter -> searchCriteria.indexOf(requestParameter))
+                .findFirst();
+        if(caloriesParameterIndex.isPresent()) searchCriteria.remove(caloriesParameterIndex.get().intValue());
+    }
+
+    private void addCaloriesMinMax(int min, int max) {
         addSearchCriteria(CALORIES_KEY, String.valueOf(min) + "-" + String.valueOf(max));
     }
-    
+
     //@TODO make private when method is no longer used in Main.class
-    public void addSearchCriteria(String key, String value) {
+    private void addSearchCriteria(String key, String value) {
         searchCriteria.add(new RequestParameter(key, value));
     }
 
     public List<RequestParameter> getSearchCriteria() {
         List<RequestParameter> result = new ArrayList<>(searchCriteria);
-        result.add(new RequestParameter("from", String.valueOf(first)));
-        result.add(new RequestParameter("to", String.valueOf(last)));
+        result.add(new RequestParameter("from", String.valueOf(offset)));
+        result.add(new RequestParameter("to", String.valueOf(recipesToDownload + offset)));
         return result;
     }
 
-    public int getFirst() {
-        return first;
+    public int getOffset() {
+        return offset;
     }
 
-    public void setFirst(int first) {
-        this.first = first;
+    public void setOffset(int offset) {
+        this.offset = offset;
     }
 
-    public int getLast() {
-        return last;
+    public int getRecipesToDownload() {
+        return recipesToDownload;
     }
 
-    public void setLast(int last) {
-        this.last = last;
+    public void setRecipesToDownload(int recipesToDownload) {
+        this.recipesToDownload = recipesToDownload;
     }
 }

@@ -22,15 +22,19 @@ public class RecipeService {
         load();
     }
 
+    public RecipeService(Preferences userPreferences) {
+        this.userPreferences = userPreferences;
+        load();
+    }
+
     public RecipeService() {
         load();
     }
 
     public void load(){
-        myRequest.addCaloriesMinMax(200,10000);
         myRequest.addUserPreferences(userPreferences);
-        myRequest.setFirst(0);
-        myRequest.setLast(100);
+        myRequest.setOffset(0);
+        myRequest.setRecipesToDownload(100);
         responseList = new ArrayList<>();
         responseList = requestManager.getResponse(myRequest);
         for (String s : responseList) {
@@ -52,11 +56,11 @@ public class RecipeService {
     }
 
     public void setNumberOfRecipiesToBeDownloaded(int number){
-        myRequest.setLast(number);
+        myRequest.setRecipesToDownload(number);
     }
 
     public void setNumberOfRecipiesToBeDownloadedWithOffset(int number, int offset){
-        myRequest.setFirst(number);
-        myRequest.setLast(number + offset);
+        myRequest.setOffset(number);
+        myRequest.setRecipesToDownload(number + offset);
     }
 }

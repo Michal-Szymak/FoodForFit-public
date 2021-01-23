@@ -23,7 +23,6 @@ public class IndexController {
     RecipeService recipeService = setRecipeService(preferences);
     MealDistributor mealDistributor = setMealDistributor(recipeService.getRecipeList(),preferences);
 
-
     private Preferences setPreferences(){
         log.info("setting preferences");
         Preferences preferences = new Preferences();
@@ -43,8 +42,8 @@ public class IndexController {
     }
     private RecipeService setRecipeService(Preferences preferences) {
         log.info("setting service");
-        RecipeService recipeService = new RecipeService();
-        recipeService.setUserPreferences(preferences);
+        RecipeService recipeService = new RecipeService(preferences);
+//        recipeService.setUserPreferences(preferences);
         recipeService.setNumberOfRecipiesToBeDownloaded(1000);
         log.info("service setted");
         return recipeService;

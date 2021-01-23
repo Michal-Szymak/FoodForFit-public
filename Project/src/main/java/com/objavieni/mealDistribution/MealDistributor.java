@@ -26,7 +26,7 @@ log.info("loading preferendes to distributor");
         log.info("loading recipes to meallist");
         this.mealList = recipesToMeals(recipeList);
         log.info("distribute to weeklymeals");
-        this.weeklyMeals = distribute();
+        this.weeklyMeals = distributeTwo();
     }
 
 
@@ -67,6 +67,29 @@ log.info("loading preferendes to distributor");
             }
             weeklyMeals.addDailyMeals(day);
         }
+        return weeklyMeals;
+    }
+
+    public WeeklyMeals distributeTwo() {
+        WeeklyMeals weeklyMeals = new WeeklyMeals();
+        int caloriesPerMeal = preferences.getCountCaloriesPerDay() / preferences.getCountMealsPerDay();
+        List<Meal> acceptableMeals = mealList.stream()
+                .filter(meal -> meal.isInCaloricDiff(ACCEPTABLE_CALORIES_DIFF, caloriesPerMeal))
+                .collect(Collectors.toList());
+
+        log.info("mealList: " + mealList.size() + " # acceptable: " + acceptableMeals.size());
+        mealList.forEach(meal -> log.info("Added " + meal));
+
+        for (int i = 0; i < DAYS_IN_WEEK; i++){
+            DailyMeals day = new DailyMeals();
+            for (int j = 0; j < preferences.getCountMealsPerDay(); j++) {
+                int randomIndex = (int) (Math.random() * acceptableMeals.size());
+                day.addMeal(acceptableMeals.get(randomIndex));
+                acceptableMeals.remove(randomIndex);
+            }
+            weeklyMeals.addDailyMeals(day);
+        }
+
         return weeklyMeals;
     }
 
