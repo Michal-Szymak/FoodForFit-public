@@ -26,9 +26,11 @@ class RequestTest {
         preferences.addHealthLabelToPreferences(HealthLabel.PEANUTS);
         preferences.addHealthLabelToPreferences(HealthLabel.IMMUNE_SUPPORTIVE);
         preferences.addDietLabelToPreferences(DietLabel.LOW_CARB);
+        preferences.setCountCaloriesPerDay(2000);
+        preferences.setCountMealsPerDay(4);
         //when
         request.addUserPreferences(preferences);
         //then
-        assertThat(request.getSearchCriteria().size()).isEqualTo(9);
+        assertThat(request.getSearchCriteria().size()).isEqualTo(10);
     }
 }
