@@ -43,4 +43,6 @@ public class DailyMeals{
     public List<Meal> getMealList() {
         return mealList;
     }
+
+
 }
