@@ -39,7 +39,7 @@
             <td>
                 <!--                    <input type="checkbox" th:checked="${preferences.addHealthLabelToPreferences('health')}" th:field="${health}" th:value="${health}"/>-->
                 <input type="checkbox" th:field="*{allergies}" th:value="${health}" th:text="${health}"/>
-                <label th:text="${health}" ></label>
+
             </td>
         </tr>
         <tr th:each="diet : ${diet}">
