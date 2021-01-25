@@ -69,6 +69,8 @@ public class IndexController {
         model.addAttribute("user", user);
         model.addAttribute("dietLabels", preferences.getDietLabels());
         model.addAttribute("allergies", preferences.getAllergies());
+        model.addAttribute("countMealsPerDay", preferences.getCountMealsPerDay());
+        model.addAttribute("countCaloriesPerDay", preferences.getCountCaloriesPerDay());
         return "profile";
     }
 

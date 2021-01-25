@@ -54,6 +54,16 @@
                 <td th:text="${dietLabel}"></td>
 
             </tr>
+            <tr th:each="mealsPerDay : ${countMealsPerDay}">
+                <td>Meals per day</td>
+                <td th:text="${mealsPerDay}"></td>
+
+            </tr>
+            <tr th:each="CaloriesPerDay : ${countCaloriesPerDay}">
+                <td>Calories per day</td>
+                <td th:text="${CaloriesPerDay}"></td>
+
+            </tr>
 
         </table>
     </div>
