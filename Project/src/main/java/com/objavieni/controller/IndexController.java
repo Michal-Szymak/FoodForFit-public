@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -76,18 +78,21 @@ public class IndexController {
 
     @GetMapping("/diet")
     public String getDiet(Model model){
-        model.addAttribute("health",HealthLabel.values());
-        model.addAttribute("diet",DietLabel.values());
+        List<HealthLabel> healthLabelListToShow = new ArrayList<>(Arrays.asList(HealthLabel.values().clone()));
+        healthLabelListToShow.removeAll(preferences.getAllergies());
+        List<DietLabel> dietLabelListToShow = new ArrayList<>(Arrays.asList(DietLabel.values()));
+        dietLabelListToShow.removeAll(preferences.getDietLabels());
+
+        model.addAttribute("health",healthLabelListToShow);
+        model.addAttribute("diet",dietLabelListToShow);
         model.addAttribute("preferences",new Preferences());
+        model.addAttribute("myPreferences",preferences);
 
         return "diet";
     }
     @PostMapping("savePreferences")
     public String savePreferences(@ModelAttribute Preferences preferences){
         this.preferences = preferences;
-        log.info("preferences loaded  : " + preferences.getDietLabels() + "\n" + preferences.getAllergies() );
-        preferences.addDietLabelToPreferences(DietLabel.LOW_CARB);
-        preferences.addHealthLabelToPreferences(HealthLabel.KETO);
         log.info("preferences loaded  : " + preferences.getDietLabels() + "\n" + preferences.getAllergies() );
         user = setUser(preferences);
         recipeService = setRecipeService(preferences);
