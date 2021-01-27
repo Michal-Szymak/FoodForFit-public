@@ -13,6 +13,7 @@ public class WeeklyMeals{
 
     public WeeklyMeals() {
     }
+
     public void addDailyMeals(DailyMeals dailyMeals){
         dailyMealsList.add(dailyMeals);
     }
