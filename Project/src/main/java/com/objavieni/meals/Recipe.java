@@ -21,6 +21,10 @@ public class Recipe {
         this.name = name;
     }
 
+    public Recipe(Map<String, String[]> mapOfLabels) {
+        this.mapOfLabels = mapOfLabels;
+    }
+
     public Recipe(String imgSrc, String name, int calories, int totalWeight
             , int yield, Map<String, Integer> mapOfNutrients
             , Map<String, String[]> mapOfLabels) {
