@@ -1,5 +1,9 @@
 package com.objavieni.request;
 
+import kong.unirest.json.JSONObject;
+import org.apache.tomcat.util.json.JSONParser;
+import org.apache.tomcat.util.json.ParseException;
+
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -37,26 +41,5 @@ public class ResponseManager {
             return Optional.empty();
         }
     }
-
-    //    public static List<String> getResponse(HttpRequest com.objavieni.request) {
-//        ArrayList<String> result = new ArrayList<>();
-//        Optional<String> response = getResponseStringFromServer(com.objavieni.request);
-//        if(response.isPresent()) {
-//            String[] separatedResponse = response.get().split("\"recipe\"");
-//            for (int i = 1; i < separatedResponse.length; i++) {
-//                result.add(separatedResponse[i]);
-//            }
-//        }
-//        return result;
-//    }
-
-    //    public static List<String> getResponse(HttpRequest com.objavieni.request) {
-//        Optional<String> response = getResponseStringFromServer(com.objavieni.request);
-//        if (response.isPresent()) {
-//            return separateResponseToList(response.get());
-//        } else {
-//            return Collections.emptyList();
-//        }
-//    }
 
 }

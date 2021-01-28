@@ -4,26 +4,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DailyMeals{
+public class DailyMeals {
     private List<Meal> mealList = new ArrayList<>();
 
     public DailyMeals() {
     }
 
-
-
     public DailyMeals(List<Meal> mealList) {
         this.mealList = mealList;
     }
-    public String[] getDailyIngredients(){
+
+    public String[] getDailyIngredients() {
         List<String> list = new ArrayList<>();
         mealList.forEach(x -> list.addAll(Arrays.asList(x.getIngredients())));
         return list.toArray(new String[0]);
     }
-    public void addMeal(Meal meal){
+
+    public void addMeal(Meal meal) {
         mealList.add(meal);
     }
-    public int getCalories(){
+
+    public int getCalories() {
         int cal = 0;
         for (Meal meal : mealList) {
             cal += meal.getCalories();

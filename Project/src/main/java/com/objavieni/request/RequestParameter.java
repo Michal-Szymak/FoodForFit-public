@@ -1,6 +1,7 @@
 package com.objavieni.request;
 
 public class RequestParameter {
+
     public String key;
     public String value;
 

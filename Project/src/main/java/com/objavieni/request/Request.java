@@ -36,14 +36,6 @@ public class Request {
         addCalories(caloriesPerMeal, ACCEPTABLE_CALORIES_DIFFERENCE);
     }
 
-    private void addCaloriesMin(int min) {
-        addSearchCriteria(CALORIES_KEY, String.valueOf(min + "%2B"));
-    }
-
-    private void addCaloriesMax(int max) {
-        addSearchCriteria(CALORIES_KEY, String.valueOf(max));
-    }
-
     private void addCalories(int expectedCalories, int acceptableDifference) {
         String queryValue = (expectedCalories - acceptableDifference) + "-" + (expectedCalories + acceptableDifference);
         removeOldCaloriesRequestParameter();
@@ -58,11 +50,6 @@ public class Request {
         if(caloriesParameterIndex.isPresent()) searchCriteria.remove(caloriesParameterIndex.get().intValue());
     }
 
-    private void addCaloriesMinMax(int min, int max) {
-        addSearchCriteria(CALORIES_KEY, String.valueOf(min) + "-" + String.valueOf(max));
-    }
-
-    //@TODO make private when method is no longer used in Main.class
     private void addSearchCriteria(String key, String value) {
         searchCriteria.add(new RequestParameter(key, value));
     }
