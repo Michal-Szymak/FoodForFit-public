@@ -1,6 +1,7 @@
 package com.objavieni.meals;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Meal{
@@ -8,6 +9,9 @@ public class Meal{
 
     public Meal(Recipe recipe) {
         this.recipe = recipe;
+    }
+
+    public Meal() {
     }
 
     public int getCalories(){
@@ -29,6 +33,18 @@ public class Meal{
     }
     public String[] getIngredients(){
         return recipe.getMapOfLabels().get("Ingredients");
+    }
+    public List<String> getIngredientsFromArray(){
+        return recipe.getIngredients();
+    }
+
+    public String getIngredientsAsString(){
+        String text = "";
+
+        for (String s : getIngredients()) {
+            text += s + "\n";
+        }
+        return text;
     }
 
     @Override

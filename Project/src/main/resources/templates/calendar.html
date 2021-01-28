@@ -32,6 +32,13 @@
         <td th:each="meal : ${dailyMeal.getMealList()}">
             <img th:src="${meal.getImageSource()}">
             <div th:text="${meal.getName()}"></div>
+            <form id="hotDealForm" th:action="@{getIngredients}" th:object="${ingredients}" method="post">
+                <input type="checkbox" th:field="*{list}" th:value="${meal.getRecipe().getIngredients()}">
+                    <input type="submit" value="Get Ingredients"/>
+
+            </form>
+
+
         </td>
          </tr>
     </table>
