@@ -80,12 +80,18 @@ public class IndexController {
 
     @GetMapping("/diet")
     public String getDiet(Model model){
-        List<HealthLabel> healthLabelListToShow = new ArrayList<>(Arrays.asList(HealthLabel.values().clone()));
-        //healthLabelListToShow.removeAll(preferences.getAllergies());
-        List<DietLabel> dietLabelListToShow = new ArrayList<>(Arrays.asList(DietLabel.values()));
-        //dietLabelListToShow.removeAll(preferences.getDietLabels());
+        Arrays.asList(HealthLabel.values().clone());
+        List<List<HealthLabel>> healthLabelListToShow = new ArrayList<List<HealthLabel>>();
+        for (int i = 0; i < HealthLabel.values().length - 3; i+=3){
+            List<HealthLabel> list = new ArrayList<>();
+            list.add(HealthLabel.values()[i]);
+            list.add(HealthLabel.values()[i+1]);
+            list.add(HealthLabel.values()[i+2]);
+            healthLabelListToShow.add(list);
+        }
 
-        model.addAttribute("health",healthLabelListToShow);
+        List<DietLabel> dietLabelListToShow = new ArrayList<>(Arrays.asList(DietLabel.values()));
+        model.addAttribute("healthListsList",healthLabelListToShow);
         model.addAttribute("diet",dietLabelListToShow);
         model.addAttribute("preferences",new Preferences());
         model.addAttribute("myPreferences",preferences);
