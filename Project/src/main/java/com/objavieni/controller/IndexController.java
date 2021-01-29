@@ -24,6 +24,7 @@ public class IndexController {
     User user = setUser(preferences);
     RecipeService recipeService = setRecipeService(preferences);
     MealDistributor mealDistributor = setMealDistributor(recipeService.getRecipeList(),preferences);
+    Ingredients ingredients;
 
     private Preferences setPreferences(){
         log.info("setting preferences");
@@ -64,6 +65,7 @@ public class IndexController {
 
         List<DailyMeals> list = mealDistributor.getWeeklyMeals().getDailyMealsList();
         model.addAttribute("weeklyMeals",list);
+        model.addAttribute("ingredients",new Ingredients());
         return "calendar";
     }
     @GetMapping("/profile")
@@ -79,14 +81,15 @@ public class IndexController {
     @GetMapping("/diet")
     public String getDiet(Model model){
         List<HealthLabel> healthLabelListToShow = new ArrayList<>(Arrays.asList(HealthLabel.values().clone()));
-        healthLabelListToShow.removeAll(preferences.getAllergies());
+        //healthLabelListToShow.removeAll(preferences.getAllergies());
         List<DietLabel> dietLabelListToShow = new ArrayList<>(Arrays.asList(DietLabel.values()));
-        dietLabelListToShow.removeAll(preferences.getDietLabels());
+        //dietLabelListToShow.removeAll(preferences.getDietLabels());
 
         model.addAttribute("health",healthLabelListToShow);
         model.addAttribute("diet",dietLabelListToShow);
         model.addAttribute("preferences",new Preferences());
         model.addAttribute("myPreferences",preferences);
+
 
         return "diet";
     }
@@ -99,6 +102,19 @@ public class IndexController {
         mealDistributor = setMealDistributor(recipeService.getRecipeList(),preferences);
 
         return "redirect:calendar";
+    }
+    @PostMapping("/getIngredients")
+    public String getIngredients(@ModelAttribute Ingredients ingredients){
+        log.info("loading ingredients : " + ingredients);
+        this.ingredients = ingredients;
+        log.info("loaded ingredients : " + this.ingredients);
+        return "redirect:ingredients";
+    }
+    @GetMapping("/ingredients")
+    public String showIngredients(Model model){
+        log.info("showing ingreedients : " + ingredients.toString());
+        model.addAttribute("ingredients",ingredients.getList());
+        return "ingredients";
     }
 
 

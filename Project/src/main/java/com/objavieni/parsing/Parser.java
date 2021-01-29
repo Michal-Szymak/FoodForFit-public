@@ -1,10 +1,13 @@
 package com.objavieni.parsing;
 
 import com.objavieni.meals.Recipe;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
+@Slf4j
 public class Parser {
 
     public Recipe recipeParser (String text){
@@ -26,13 +29,14 @@ public class Parser {
             String[] arrayOfHealthLabels = getArrayOfLabel(text, "healthLabels");
             String[] arrayOfDietLabels = getArrayOfLabel(text, "dietLabels");
             String[] arrayOfIngredients = getArrayOfLabel(text, "ingredientLines");
+            List<String> ingredientsList = Arrays.asList(arrayOfIngredients);
 
             Map<String, String[]> mapOfLabels = new HashMap<>();
             mapOfLabels.put("Ingredients", arrayOfIngredients);
             mapOfLabels.put("Health Labels", arrayOfHealthLabels);
             mapOfLabels.put("Diet Labels", arrayOfDietLabels);
 
-            return new Recipe(imgSrc,label, calories, weight, yield, mapOfNutrients, mapOfLabels);
+            return new Recipe(imgSrc,label, calories, weight, yield, mapOfNutrients, mapOfLabels,ingredientsList);
         }
         return null;
     }
@@ -55,9 +59,9 @@ public class Parser {
     private static String[] getArrayOfLabel(String text,String searchFraze){
         String[] array = new String[0];
         if (text.contains(searchFraze)) {
-            array = text.split("\"" + searchFraze + "\":\\[", 2)[1]
-                    .split("],", 2)[0]
-                    .split(",");
+            array = text.split("\"" + searchFraze + "\":\\[\"", 2)[1]
+                    .split("\"],", 2)[0]
+                    .split("\",\"");
         }
         return array;
     }

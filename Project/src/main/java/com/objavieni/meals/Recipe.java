@@ -1,5 +1,6 @@
 package com.objavieni.meals;
 
+import java.util.List;
 import java.util.Map;
 
 public class Recipe {
@@ -10,6 +11,15 @@ public class Recipe {
     private int totalWeight;
     private int yield;
     private String imgSrc;
+    private List<String> ingredients;
+
+    public List<String> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<String> ingredients) {
+        this.ingredients = ingredients;
+    }
 
     private Map<String, String[]> mapOfLabels;
     private Map<String,Integer> mapOfNutrients;
@@ -27,7 +37,7 @@ public class Recipe {
 
     public Recipe(String imgSrc, String name, int calories, int totalWeight
             , int yield, Map<String, Integer> mapOfNutrients
-            , Map<String, String[]> mapOfLabels) {
+            , Map<String, String[]> mapOfLabels,List<String> ingredients) {
         this.name = name;
         this.calories = calories;
         this.totalWeight = totalWeight;
@@ -35,6 +45,7 @@ public class Recipe {
         this.mapOfNutrients = mapOfNutrients;
         this.mapOfLabels = mapOfLabels;
         this.imgSrc = imgSrc;
+        this.ingredients = ingredients;
         caloriesPer100g = (int) ((calories / (totalWeight / 100.0)) + 0.5);
     }
 

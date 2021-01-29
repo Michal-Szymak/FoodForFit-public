@@ -139,7 +139,11 @@ public class MealDistributor {
                 .collect(Collectors.toList());
 
         log.info("mealList: " + mealList.size() + " # acceptable: " + acceptableMeals.size());
+
+      
+
         mealList.forEach(meal -> log.info("Added " + meal.getName() + ": " + meal.getCalories()));
+
 
         for (int i = 0; i < DAYS_IN_WEEK; i++) {
             DailyMeals day = new DailyMeals();

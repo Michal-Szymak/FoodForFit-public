@@ -9,9 +9,14 @@
 <body>
 ingredients:
 <table>
-    <tr>
+    <tr th:each="ingredient,index : ${ingredients}">
+        <td>
+            <div th:text="(${index.index}+1) + '  :  '">index</div>
 
-            <div th:text="${ingredients}"></div>
+        </td>
+
+        <td>
+            <div th:text="${ingredient}">ingredient</div>
         </td>
     </tr>
 </table>
