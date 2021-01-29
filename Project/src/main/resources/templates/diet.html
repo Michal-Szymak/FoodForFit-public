@@ -24,8 +24,14 @@
 </header>
 <div class="container">
     <form th:action="@{savePreferences}" th:object="${preferences}" method="post">
-    <table>
+    <table class="table table-striped">
         <tr>
+            <td>
+                <p class="h3">Main</p>
+            </td>
+        </tr>
+        <tr>
+
             <td>Dily meals : </td>
             <td><input type="number" th:field="*{countMealsPerDay}"></td>
         </tr>
@@ -34,16 +40,34 @@
             <td><input type="number" th:field="*{countCaloriesPerDay}"></td>
         </tr>
 
-        <tr th:each="health,index : ${health}">
-            <td>Health labels</td>
+        <tr>
             <td>
-                <!--                    <input type="checkbox" th:checked="${preferences.addHealthLabelToPreferences('health')}" th:field="${health}" th:value="${health}"/>-->
-                <input type="checkbox" th:field="*{allergies}" th:value="${health}" th:text="${health}"/>
 
+                <p class="h3">Health Labels</p>
             </td>
         </tr>
+<tr th:each="healthList : ${healthListsList}">
+    <td th:each="health : ${healthList}">
+        <input type="checkbox" th:field="*{allergies}" th:value="${health}" th:text="${health}"/>
+    </td>
+
+</tr>
+        <tr>
+            <td>
+                <p class="h3">Diet Labels</p>
+            </td>
+
+        </tr>
+<!--        <tr th:each="health,index : ${health}">-->
+<!--            <td>Health labels</td>-->
+<!--            <td>-->
+<!--                &lt;!&ndash;                    <input type="checkbox" th:checked="${preferences.addHealthLabelToPreferences('health')}" th:field="${health}" th:value="${health}"/>&ndash;&gt;-->
+<!--                <input type="checkbox" th:field="*{allergies}" th:value="${health}" th:text="${health}"/>-->
+
+<!--            </td>-->
+<!--        </tr>-->
         <tr th:each="diet : ${diet}">
-            <td>Diet Labels</td>
+
             <td>
                 <!--                <input type="checkbox" th:checked="${preferences.addDietLabelToPreferences(LOW_SODIUM)}" th:field="${diet}" th:value="${diet}"/>-->
                 <input type="checkbox" th:field="*{dietLabels}" th:value="${diet}" th:text="${diet}"/>
