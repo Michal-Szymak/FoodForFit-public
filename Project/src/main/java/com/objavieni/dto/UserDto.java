@@ -3,10 +3,11 @@ package com.objavieni.dto;
 import com.objavieni.user.Preferences;
 import com.objavieni.user.User;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
-
+@NoArgsConstructor
 public class UserDto {
     private long id;
     private String name;

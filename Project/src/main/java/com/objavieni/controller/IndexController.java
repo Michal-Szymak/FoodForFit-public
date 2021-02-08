@@ -25,11 +25,12 @@ public class IndexController {
     private final UserService userService;
 
 
-    public Preferences preferences = setPreferences();
-    public UserDto userDto = setUser(preferences);
-    public RecipeService recipeService = setRecipeService(preferences);
-    public MealDistributor mealDistributor = setMealDistributor(recipeService.getRecipeList(),preferences);
+    public Preferences preferences;// = setPreferences();
+  //  public UserDto userDto = setUser(preferences);
+    public RecipeService recipeService;// = setRecipeService(preferences);
+    public MealDistributor mealDistributor;// = setMealDistributor(recipeService.getRecipeList(),preferences);
     public Ingredients ingredients;
+    public UserDto loggedUser;
 
     public IndexController(UserService userService) {
         this.userService = userService;
@@ -81,11 +82,11 @@ public class IndexController {
     }
     @GetMapping("/profile")
     public String getProfile(Model model){
-        model.addAttribute("user", userDto);
-        model.addAttribute("dietLabels", preferences.getDietLabels());
-        model.addAttribute("allergies", preferences.getAllergies());
-        model.addAttribute("countMealsPerDay", preferences.getCountMealsPerDay());
-        model.addAttribute("countCaloriesPerDay", preferences.getCountCaloriesPerDay());
+        model.addAttribute("user", loggedUser);
+        model.addAttribute("dietLabels", loggedUser.getPreferences().getDietLabels());
+        model.addAttribute("allergies", loggedUser.getPreferences().getAllergies());
+        model.addAttribute("countMealsPerDay", loggedUser.getPreferences().getCountMealsPerDay());
+        model.addAttribute("countCaloriesPerDay", loggedUser.getPreferences().getCountCaloriesPerDay());
         return "profile";
     }
 
@@ -114,8 +115,8 @@ public class IndexController {
     public String savePreferences(@ModelAttribute Preferences preferences){
         this.preferences = preferences;
         log.info("preferences loaded  : " + preferences.getDietLabels() + "\n" + preferences.getAllergies() );
-        userDto = setUser(preferences);
-        userService.saveUser(userDto);
+        loggedUser.setPreferences(preferences);
+        loggedUser = userService.updateUser(loggedUser);
         recipeService = setRecipeService(preferences);
         mealDistributor = setMealDistributor(recipeService.getRecipeList(),preferences);
 
@@ -135,6 +136,43 @@ public class IndexController {
         log.info("showing ingreedients : " + ingredients.toString());
         model.addAttribute("ingredients",ingredients.getList());
         return "ingredients";
+    }
+
+    @GetMapping("/login")
+    public String loginWindow(Model model){
+        model.addAttribute("user",new UserDto());
+        return "login";
+    }
+
+    @GetMapping("/register")
+    public String registerWindow(Model model){
+        model.addAttribute("user",new UserDto());
+        return "register";
+    }
+
+    @PostMapping("/registerUser")
+    public String registerUser(UserDto userDto){
+        UserDto userDto1 = userService.saveUser(userDto);
+        if (userDto1 != null) {
+            log.info("registered, redirecting to login");
+            return "redirect:login";
+        } else {
+            log.info("not registered, redirecting to register");
+            return "redirect:register";
+        }
+    }
+
+    @PostMapping("loginUser")
+    public String loginP(UserDto userDto){
+        loggedUser = userService.findByName(userDto.getName());
+        loggedUser.setPreferences(new Preferences());
+        if (loggedUser != null) {
+            log.info("logged , redirecting to diet");
+            return "redirect:diet";
+        } else {
+            log.info("not logged , redirecting to login");
+            return "login";
+        }
     }
 
 
