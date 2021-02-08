@@ -1,9 +1,20 @@
 package com.objavieni.user;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "preferences")
 public class Preferences {
+
+    @Id
+    @GeneratedValue
+    private long id;
+    private User user;
     private List<HealthLabel> allergies = new ArrayList<>();
     private List<DietLabel> dietLabels = new ArrayList<>();
 
