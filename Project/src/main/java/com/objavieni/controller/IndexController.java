@@ -6,7 +6,6 @@ import com.objavieni.meals.Recipe;
 import com.objavieni.meals.RecipeService;
 import com.objavieni.service.UserService;
 import com.objavieni.user.*;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,17 +19,22 @@ import java.util.List;
 
 @Controller
 @Slf4j
-@RequiredArgsConstructor
+
 public class IndexController {
 
     private final UserService userService;
 
 
-    Preferences preferences = setPreferences();
-    UserDto userDto = setUser(preferences);
-    RecipeService recipeService = setRecipeService(preferences);
-    MealDistributor mealDistributor = setMealDistributor(recipeService.getRecipeList(),preferences);
-    Ingredients ingredients;
+    public Preferences preferences = setPreferences();
+    public UserDto userDto = setUser(preferences);
+    public RecipeService recipeService = setRecipeService(preferences);
+    public MealDistributor mealDistributor = setMealDistributor(recipeService.getRecipeList(),preferences);
+    public Ingredients ingredients;
+
+    public IndexController(UserService userService) {
+        this.userService = userService;
+    }
+
 
     private Preferences setPreferences(){
         log.info("setting preferences");
@@ -111,11 +115,13 @@ public class IndexController {
         this.preferences = preferences;
         log.info("preferences loaded  : " + preferences.getDietLabels() + "\n" + preferences.getAllergies() );
         userDto = setUser(preferences);
+        userService.saveUser(userDto);
         recipeService = setRecipeService(preferences);
         mealDistributor = setMealDistributor(recipeService.getRecipeList(),preferences);
 
         return "redirect:calendar";
     }
+
     @PostMapping("/getIngredients")
     public String getIngredients(@ModelAttribute Ingredients ingredients){
         log.info("loading ingredients : " + ingredients);
@@ -123,6 +129,7 @@ public class IndexController {
         log.info("loaded ingredients : " + this.ingredients);
         return "redirect:ingredients";
     }
+
     @GetMapping("/ingredients")
     public String showIngredients(Model model){
         log.info("showing ingreedients : " + ingredients.toString());

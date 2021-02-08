@@ -13,10 +13,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MyConfiguration {
 
-    @Bean
-    public UserService getUserService(){
-        return new UserService();
-    }
+//    @Bean
+//    public UserService getUserService(){
+//        return new UserService();
+//    }
+
 
 //    @Bean
 //    public Request getRequest() {

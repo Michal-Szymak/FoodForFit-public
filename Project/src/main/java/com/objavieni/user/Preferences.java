@@ -28,12 +28,12 @@ public class Preferences {
     private User user;
 
     @ElementCollection(targetClass = HealthLabel.class)
-    @JoinTable(name = "healthLabels", joinColumns = @JoinColumn(name = "id"))
+    @JoinTable(name = "health_labels", joinColumns = @JoinColumn(name = "id"))
     @Enumerated(EnumType.STRING)
     private List<HealthLabel> allergies = new ArrayList<>();
 
     @ElementCollection(targetClass = DietLabel.class)
-    @JoinTable(name = "dietLabels", joinColumns = @JoinColumn(name = "id"))
+    @JoinTable(name = "diet_labels", joinColumns = @JoinColumn(name = "id"))
     @Enumerated(EnumType.STRING)
     private List<DietLabel> dietLabels = new ArrayList<>();
 

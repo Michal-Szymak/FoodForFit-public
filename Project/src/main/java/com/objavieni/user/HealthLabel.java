@@ -1,7 +1,9 @@
 package com.objavieni.user;
 
 
+import javax.persistence.Table;
 
+@Table(name = "health_label")
 public enum HealthLabel {
 
     ALCOHOL_FREE("alcohol-free"),
