@@ -1,13 +1,14 @@
 package com.objavieni.user;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import com.objavieni.dto.UserDto;
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
+@Data
 @Entity
 @Table(name = "user")
 public class User {
@@ -16,22 +17,33 @@ public class User {
     @GeneratedValue
     private long id;
     private String name;
-    private Gender gender;
+
+
+    private String gender;
     private int age;
 
-    @OneToOne(mappedBy = "preferences")
+    @OneToOne(mappedBy = "user")
     private Preferences preferences;
 
     public User() {
     }
 
-    public User(String name, Gender gender, int age, Preferences preferences) {
+    public User(String name, String gender, int age, Preferences preferences) {
         this.name = name;
         this.gender = gender;
         this.age = age;
         this.preferences = preferences;
+
     }
 
+
+    public User(UserDto userDto) {
+        this.id = userDto.getId();
+        this.name = userDto.getName();
+        this.gender = userDto.getGender();
+        this.age = userDto.getAge();
+        this.preferences = userDto.getPreferences();
+    }
 
     public String getName() {
         return name;
@@ -41,11 +53,11 @@ public class User {
         this.name = name;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

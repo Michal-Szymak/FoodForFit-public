@@ -1,5 +1,7 @@
 package com.objavieni.user;
 
+
+
 public enum HealthLabel {
 
     ALCOHOL_FREE("alcohol-free"),

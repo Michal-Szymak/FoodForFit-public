@@ -1,5 +1,8 @@
 package com.objavieni.user;
 
+
+
+
 public enum DietLabel {
 
     BALANCED("balanced"),

@@ -1,9 +1,12 @@
 package com.objavieni.controller;
+import com.objavieni.dto.UserDto;
 import com.objavieni.mealDistribution.MealDistributor;
 import com.objavieni.meals.DailyMeals;
 import com.objavieni.meals.Recipe;
 import com.objavieni.meals.RecipeService;
+import com.objavieni.service.UserService;
 import com.objavieni.user.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,11 +20,14 @@ import java.util.List;
 
 @Controller
 @Slf4j
+@RequiredArgsConstructor
 public class IndexController {
+
+    private final UserService userService;
 
 
     Preferences preferences = setPreferences();
-    User user = setUser(preferences);
+    UserDto userDto = setUser(preferences);
     RecipeService recipeService = setRecipeService(preferences);
     MealDistributor mealDistributor = setMealDistributor(recipeService.getRecipeList(),preferences);
     Ingredients ingredients;
@@ -37,11 +43,12 @@ public class IndexController {
         return preferences;
     }
 
-    public User setUser(Preferences preferences){
+    public UserDto setUser(Preferences preferences){
         log.info("setting user");
-        User user = new User("Paweł", Gender.MALE, 30, preferences);
+        UserDto userDto = new UserDto("Paweł", "male", 30, preferences);
+        //userDto = userService.saveUser(userDto);
         log.info("user setted");
-        return user;
+        return userDto;
     }
     private RecipeService setRecipeService(Preferences preferences) {
         log.info("setting service");
@@ -70,7 +77,7 @@ public class IndexController {
     }
     @GetMapping("/profile")
     public String getProfile(Model model){
-        model.addAttribute("user", user);
+        model.addAttribute("user", userDto);
         model.addAttribute("dietLabels", preferences.getDietLabels());
         model.addAttribute("allergies", preferences.getAllergies());
         model.addAttribute("countMealsPerDay", preferences.getCountMealsPerDay());
@@ -103,7 +110,7 @@ public class IndexController {
     public String savePreferences(@ModelAttribute Preferences preferences){
         this.preferences = preferences;
         log.info("preferences loaded  : " + preferences.getDietLabels() + "\n" + preferences.getAllergies() );
-        user = setUser(preferences);
+        userDto = setUser(preferences);
         recipeService = setRecipeService(preferences);
         mealDistributor = setMealDistributor(recipeService.getRecipeList(),preferences);
 
