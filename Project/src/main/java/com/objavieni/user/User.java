@@ -1,10 +1,25 @@
 package com.objavieni.user;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "user")
 public class User {
 
+    @Id
+    @GeneratedValue
+    private long id;
     private String name;
     private Gender gender;
     private int age;
+
+    @OneToOne(mappedBy = "preferences")
     private Preferences preferences;
 
     public User() {
