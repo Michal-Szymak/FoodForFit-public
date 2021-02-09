@@ -1,9 +1,12 @@
 package com.objavieni.controller;
+import com.objavieni.dto.PreferencesDto;
 import com.objavieni.dto.UserDto;
+import com.objavieni.error.UserNotFoundException;
 import com.objavieni.mealDistribution.MealDistributor;
 import com.objavieni.meals.DailyMeals;
 import com.objavieni.meals.Recipe;
 import com.objavieni.meals.RecipeService;
+import com.objavieni.service.PreferencesService;
 import com.objavieni.service.UserService;
 import com.objavieni.user.*;
 import lombok.extern.slf4j.Slf4j;
@@ -23,17 +26,19 @@ import java.util.List;
 public class IndexController {
 
     private final UserService userService;
+    private final PreferencesService preferencesService;
 
 
-    public Preferences preferences;// = setPreferences();
+    public PreferencesDto preferencesDto = new PreferencesDto();// = setPreferences();
   //  public UserDto userDto = setUser(preferences);
     public RecipeService recipeService;// = setRecipeService(preferences);
-    public MealDistributor mealDistributor;// = setMealDistributor(recipeService.getRecipeList(),preferences);
+    public MealDistributor mealDistributor = new MealDistributor();// = setMealDistributor(recipeService.getRecipeList(),preferences);
     public Ingredients ingredients;
     public UserDto loggedUser;
 
-    public IndexController(UserService userService) {
+    public IndexController(UserService userService, PreferencesService preferencesService) {
         this.userService = userService;
+        this.preferencesService = preferencesService;
     }
 
 
@@ -48,23 +53,23 @@ public class IndexController {
         return preferences;
     }
 
-    public UserDto setUser(Preferences preferences){
-        log.info("setting user");
-        UserDto userDto = new UserDto("Paweł", "male", 30, preferences);
-        //userDto = userService.saveUser(userDto);
-        log.info("user setted");
-        return userDto;
-    }
-    private RecipeService setRecipeService(Preferences preferences) {
+//    public UserDto setUser(PreferencesDto preferencesDto){
+//        log.info("setting user");
+//        UserDto userDto = new UserDto("Paweł", "male", 30);
+//        //userDto = userService.saveUser(userDto);
+//        log.info("user setted");
+//        return userDto;
+//    }
+    private RecipeService setRecipeService(PreferencesDto preferencesDto) {
         log.info("setting service");
-        RecipeService recipeService = new RecipeService(preferences);
+        RecipeService recipeService = new RecipeService(preferencesDto);
 //        recipeService.setUserPreferences(preferences);
         recipeService.setNumberOfRecipiesToBeDownloaded(1000);
         log.info("service setted");
         return recipeService;
     }
 
-    private MealDistributor setMealDistributor(List<Recipe> recipeList, Preferences preferences) {
+    private MealDistributor setMealDistributor(List<Recipe> recipeList, PreferencesDto preferences) {
         log.info("setting distributor, recipe list size " + recipeList.size());
         MealDistributor mealDistributor =
                 new MealDistributor(recipeList,preferences);
@@ -83,10 +88,10 @@ public class IndexController {
     @GetMapping("/profile")
     public String getProfile(Model model){
         model.addAttribute("user", loggedUser);
-        model.addAttribute("dietLabels", loggedUser.getPreferences().getDietLabels());
-        model.addAttribute("allergies", loggedUser.getPreferences().getAllergies());
-        model.addAttribute("countMealsPerDay", loggedUser.getPreferences().getCountMealsPerDay());
-        model.addAttribute("countCaloriesPerDay", loggedUser.getPreferences().getCountCaloriesPerDay());
+        model.addAttribute("dietLabels", loggedUser.getPreferencesDto().getDietLabels());
+        model.addAttribute("allergies", loggedUser.getPreferencesDto().getAllergies());
+        model.addAttribute("countMealsPerDay", loggedUser.getPreferencesDto().getCountMealsPerDay());
+        model.addAttribute("countCaloriesPerDay", loggedUser.getPreferencesDto().getCountCaloriesPerDay());
         return "profile";
     }
 
@@ -106,21 +111,24 @@ public class IndexController {
         model.addAttribute("healthListsList",healthLabelListToShow);
         model.addAttribute("diet",dietLabelListToShow);
         model.addAttribute("preferences",new Preferences());
-        model.addAttribute("myPreferences",preferences);
+        model.addAttribute("myPreferences",preferencesDto);
 
 
         return "diet";
     }
     @PostMapping("savePreferences")
-    public String savePreferences(@ModelAttribute Preferences preferences){
-        this.preferences = preferences;
-        log.info("preferences loaded  : " + preferences.getDietLabels() + "\n" + preferences.getAllergies() );
-        loggedUser.setPreferences(preferences);
-        loggedUser = userService.updateUser(loggedUser);
-        recipeService = setRecipeService(preferences);
-        mealDistributor = setMealDistributor(recipeService.getRecipeList(),preferences);
+    public String savePreferences(@ModelAttribute PreferencesDto preferencesDto) throws UserNotFoundException {
+        this.preferencesDto = preferencesDto;
+        log.info("preferences loaded  : " + preferencesDto.getDietLabels() + "\n" + preferencesDto.getAllergies() );
+        //loggedUser.setPreferencesDto(preferencesDto);
+        loggedUser = userService.updateUser(loggedUser.getId(),preferencesDto);
+        //loggedUser = userService.updateUser(loggedUser);
+       // preferencesDto = preferencesService.save(preferencesDto);
+        //preferencesDto = loggedUser.getPreferencesDto();
+        recipeService = setRecipeService(preferencesDto);
+        mealDistributor = setMealDistributor(recipeService.getRecipeList(),preferencesDto);
 
-        return "redirect:calendar";
+        return "redirect:profile";
     }
 
     @PostMapping("/getIngredients")
@@ -163,12 +171,12 @@ public class IndexController {
     }
 
     @PostMapping("loginUser")
-    public String loginP(UserDto userDto){
+    public String loginP(@ModelAttribute UserDto userDto){
         loggedUser = userService.findByName(userDto.getName());
-        loggedUser.setPreferences(new Preferences());
+        //loggedUser.setPreferencesDto(new PreferencesDto());
         if (loggedUser != null) {
-            log.info("logged , redirecting to diet");
-            return "redirect:diet";
+            log.info("logged , redirecting to profile");
+            return "redirect:profile";
         } else {
             log.info("not logged , redirecting to login");
             return "login";

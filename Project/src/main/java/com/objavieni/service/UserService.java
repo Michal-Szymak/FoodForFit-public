@@ -1,7 +1,10 @@
 package com.objavieni.service;
 
 
+import com.objavieni.dto.PreferencesDto;
 import com.objavieni.dto.UserDto;
+import com.objavieni.error.UserNotFoundException;
+import com.objavieni.repository.PreferencesRepository;
 import com.objavieni.repository.UserRepository;
 import com.objavieni.user.Preferences;
 import com.objavieni.user.User;
@@ -11,30 +14,44 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
+import java.util.Optional;
+
+import static com.objavieni.functions.PreferencesFunction.dtoToPreferences;
+import static com.objavieni.functions.PreferencesFunction.preferencesToDto;
+import static com.objavieni.functions.UserFunction.dtoToUser;
+import static com.objavieni.functions.UserFunction.userToDto;
+
 @AllArgsConstructor
 @Service
 public class UserService {
 
     public final UserRepository userRepository;
+    public final PreferencesRepository preferencesRepository;
 
     @Transactional
     public UserDto saveUser(UserDto userDto){
-        userDto.setPreferences(new Preferences());
-        User user = userRepository.save(new User(userDto));
-        return new UserDto(user);
+
+            User user = userRepository.save(dtoToUser.apply(userDto));
+            return userToDto.apply(user);
+
     }
 
     @Transactional
-    public UserDto updateUser(UserDto userDto){
-        User user = userRepository.findByName(userDto.getName());
-        user.setPreferences(userDto.getPreferences());
-        return new UserDto(userRepository.save(user));
+    public UserDto updateUser(long userId,PreferencesDto preferencesDto) throws UserNotFoundException {
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        user.setPreferences(dtoToPreferences.apply(preferencesDto));
+        user = userRepository.save(user);
+        return userToDto.apply(user);
     }
 
     @Transactional
     public UserDto findByName(String name){
         User user = userRepository.findByName(name);
-        return new UserDto(user);
+        if (user.getPreferences() == null){
+            user.setPreferences(new Preferences());
+        }
+        return userToDto.apply(user);
     }
 
 

@@ -25,6 +25,7 @@ public class Preferences {
     private long id;
 
     @OneToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ElementCollection(targetClass = HealthLabel.class)

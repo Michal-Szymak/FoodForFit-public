@@ -1,5 +1,6 @@
 package com.objavieni.meals;
 
+import com.objavieni.dto.PreferencesDto;
 import com.objavieni.parsing.Parser;
 import com.objavieni.request.Request;
 import com.objavieni.request.RequestManager;
@@ -11,7 +12,7 @@ import java.util.List;
 @Slf4j
 public class RecipeService {
     Request myRequest = new Request();
-    Preferences userPreferences = new Preferences();
+    PreferencesDto userPreferences = new PreferencesDto();
     RequestManager requestManager = new RequestManager();
     List<String> responseList;
     List<Recipe> recipeList = new ArrayList<>(1000);
@@ -22,7 +23,7 @@ public class RecipeService {
         load();
     }
 
-    public RecipeService(Preferences userPreferences) {
+    public RecipeService(PreferencesDto userPreferences) {
         this.userPreferences = userPreferences;
         load();
     }
@@ -47,11 +48,11 @@ public class RecipeService {
         return recipeList;
     }
 
-    public Preferences getUserPreferences() {
+    public PreferencesDto getUserPreferences() {
         return userPreferences;
     }
 
-    public void setUserPreferences(Preferences userPreferences) {
+    public void setUserPreferences(PreferencesDto userPreferences) {
         this.userPreferences = userPreferences;
     }
 

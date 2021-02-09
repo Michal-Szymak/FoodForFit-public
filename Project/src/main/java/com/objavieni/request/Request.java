@@ -1,5 +1,6 @@
 package com.objavieni.request;
 
+import com.objavieni.dto.PreferencesDto;
 import com.objavieni.user.DietLabel;
 import com.objavieni.user.HealthLabel;
 import com.objavieni.user.Preferences;
@@ -25,14 +26,14 @@ public class Request {
         searchCriteria.add(new RequestParameter("q", ""));
     }
 
-    public void addUserPreferences(Preferences preferences) {
-        for (HealthLabel healthLabel : preferences.getAllergies()) {
+    public void addUserPreferences(PreferencesDto preferencesDto) {
+        for (HealthLabel healthLabel : preferencesDto.getAllergies()) {
             addSearchCriteria(HEALTH_LABEL_KEY, healthLabel.getDescription());
         }
-        for (DietLabel dietLabel : preferences.getDietLabels()) {
+        for (DietLabel dietLabel : preferencesDto.getDietLabels()) {
             addSearchCriteria(DIET_LABEL_KEY, dietLabel.getDescription());
         }
-        int caloriesPerMeal = preferences.getCountCaloriesPerDay() / preferences.getCountMealsPerDay();
+        int caloriesPerMeal = preferencesDto.getCountCaloriesPerDay() / preferencesDto.getCountMealsPerDay();
         addCalories(caloriesPerMeal, ACCEPTABLE_CALORIES_DIFFERENCE);
     }
 

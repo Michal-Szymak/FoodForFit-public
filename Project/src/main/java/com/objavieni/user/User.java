@@ -4,11 +4,17 @@ import com.objavieni.dto.UserDto;
 import lombok.Data;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import static com.objavieni.functions.PreferencesFunction.dtoToPreferences;
+
 @Data
 @Entity
 @Table(name = "user")
@@ -17,14 +23,17 @@ public class User {
     @Id
     @GeneratedValue
     private long id;
+
+    @Column(unique = true)
     private String name;
 
 
     private String gender;
     private int age;
 
-    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
-    private Preferences preferences;
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "preferences_id")
+    private Preferences preferences = new Preferences();
 
     public User() {
     }
@@ -43,7 +52,7 @@ public class User {
         this.name = userDto.getName();
         this.gender = userDto.getGender();
         this.age = userDto.getAge();
-        this.preferences = userDto.getPreferences();
+        this.preferences = dtoToPreferences.apply(userDto.getPreferencesDto());
     }
 
     public String getName() {

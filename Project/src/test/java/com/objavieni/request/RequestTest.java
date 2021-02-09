@@ -1,5 +1,6 @@
 package com.objavieni.request;
 
+import com.objavieni.dto.PreferencesDto;
 import com.objavieni.user.DietLabel;
 import com.objavieni.user.HealthLabel;
 import com.objavieni.user.Preferences;
@@ -21,7 +22,7 @@ class RequestTest {
     @Test
     void addUserPreferences_addsAllRequestParameters_givenProperPreferences() {
         //given
-        Preferences preferences = new Preferences();
+        PreferencesDto preferences = new PreferencesDto();
         preferences.addHealthLabelToPreferences(HealthLabel.CELERY_FREE);
         preferences.addHealthLabelToPreferences(HealthLabel.PEANUTS);
         preferences.addHealthLabelToPreferences(HealthLabel.IMMUNE_SUPPORTIVE);
