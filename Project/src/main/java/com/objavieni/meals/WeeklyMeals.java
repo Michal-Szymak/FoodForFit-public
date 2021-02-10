@@ -6,22 +6,13 @@ import java.util.List;
 
 public class WeeklyMeals{
 
-
     private List<DailyMeals> dailyMealsList = new ArrayList<>();
-
-
 
     public WeeklyMeals() {
     }
 
     public void addDailyMeals(DailyMeals dailyMeals){
         dailyMealsList.add(dailyMeals);
-    }
-
-    public String[] getIngredients(){
-        List<String> list = new ArrayList<>();
-        dailyMealsList.forEach(x -> list.addAll(Arrays.asList(x.getDailyIngredients())));
-        return list.toArray(new String[0]);
     }
 
     @Override

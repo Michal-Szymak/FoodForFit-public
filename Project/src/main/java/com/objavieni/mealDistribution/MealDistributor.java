@@ -1,12 +1,12 @@
 package com.objavieni.mealDistribution;
 
+import com.objavieni.dto.PreferencesDto;
 import com.objavieni.meals.DailyMeals;
 import com.objavieni.meals.Meal;
 import com.objavieni.meals.Recipe;
 import com.objavieni.meals.WeeklyMeals;
-import com.objavieni.user.Preferences;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -14,14 +14,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
+@NoArgsConstructor
 public class MealDistributor {
     public static final int DAYS_IN_WEEK = 7;
     public static final int ACCEPTABLE_CALORIES_DIFF = 100;
     private List<Meal> mealList;
-    private Preferences preferences;
+    private PreferencesDto preferences;
     private WeeklyMeals weeklyMeals;
 
-    public MealDistributor(List<Recipe> recipeList, Preferences preferences) {
+    public MealDistributor(List<Recipe> recipeList, PreferencesDto preferences) {
         log.info("loading preferendes to distributor");
         this.preferences = preferences;
         log.info("loading recipes to meallist");
@@ -102,75 +103,4 @@ public class MealDistributor {
     public WeeklyMeals getWeeklyMeals() {
         return weeklyMeals;
     }
-
-    /*
-    public WeeklyMeals distribute() {
-        WeeklyMeals weeklyMeals = new WeeklyMeals();
-        int caloriesPerDay = preferences.getCountCaloriesPerDay() / preferences.getCountMealsPerDay();
-        int startIndex = 0;
-        Meal meal;
-        do {
-            meal = mealList.get(startIndex);
-            startIndex++;
-        }
-        while (!meal.isInCaloricDiff(ACCEPTABLE_CALORIES_DIFF, caloriesPerDay));
-        log.info("meals until range : " + startIndex);
-        for (int i = 1; i <= DAYS_IN_WEEK; i++) {
-            DailyMeals day = new DailyMeals();
-
-            for (int j = 0; j < preferences.getCountMealsPerDay(); j++) {
-
-                Meal meal2 = mealList.get(j + startIndex);
-                mealList.remove(j + startIndex);
-                day.addMeal(meal2);
-                log.info("cal : " + meal2.getCalories() + ",  name : " + meal2.getName() + " /// added to day : " + i);
-
-            }
-            weeklyMeals.addDailyMeals(day);
-        }
-        return weeklyMeals;
-    }
-
-    public WeeklyMeals distributeTwo() {
-        WeeklyMeals weeklyMeals = new WeeklyMeals();
-        int caloriesPerMeal = preferences.getCountCaloriesPerDay() / preferences.getCountMealsPerDay();
-        List<Meal> acceptableMeals = mealList.stream()
-                .filter(meal -> meal.isInCaloricDiff(ACCEPTABLE_CALORIES_DIFF, caloriesPerMeal))
-                .collect(Collectors.toList());
-
-        log.info("mealList: " + mealList.size() + " # acceptable: " + acceptableMeals.size());
-
-      
-
-        mealList.forEach(meal -> log.info("Added " + meal.getName() + ": " + meal.getCalories()));
-
-
-        for (int i = 0; i < DAYS_IN_WEEK; i++) {
-            DailyMeals day = new DailyMeals();
-            for (int j = 0; j < preferences.getCountMealsPerDay(); j++) {
-
-                if (j == preferences.getCountMealsPerDay() - 1) {
-                    Meal lastMeal = getLastMealOfTheDay(day, acceptableMeals);
-                    day.addMeal(lastMeal);
-                    acceptableMeals.remove(lastMeal);
-                    break;
-                }
-
-                int randomIndex = (int) (Math.random() * acceptableMeals.size());
-                day.addMeal(acceptableMeals.get(randomIndex));
-                acceptableMeals.remove(randomIndex);
-            }
-            weeklyMeals.addDailyMeals(day);
-        }
-
-        for (DailyMeals dailyMeals : weeklyMeals.getDailyMealsList()) {
-            log.info("DAILY MEALS");
-            for (Meal meal : dailyMeals.getMealList()) {
-                log.info(meal.getName() + ": " + meal.getCalories());
-            }
-        }
-        return weeklyMeals;
-    }
-
-     */
 }

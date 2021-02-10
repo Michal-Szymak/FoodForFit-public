@@ -10,10 +10,6 @@ public class DailyMeals {
     public DailyMeals() {
     }
 
-    public DailyMeals(List<Meal> mealList) {
-        this.mealList = mealList;
-    }
-
     public String[] getDailyIngredients() {
         List<String> list = new ArrayList<>();
         mealList.forEach(x -> list.addAll(Arrays.asList(x.getIngredients())));
@@ -22,14 +18,6 @@ public class DailyMeals {
 
     public void addMeal(Meal meal) {
         mealList.add(meal);
-    }
-
-    public int getCalories() {
-        int cal = 0;
-        for (Meal meal : mealList) {
-            cal += meal.getCalories();
-        }
-        return cal;
     }
 
     @Override
@@ -44,6 +32,4 @@ public class DailyMeals {
     public List<Meal> getMealList() {
         return mealList;
     }
-
-
 }

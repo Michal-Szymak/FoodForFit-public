@@ -1,6 +1,7 @@
 package com.objavieni.user;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -10,11 +11,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 @Data
 @Entity
 @Table(name = "preferences")
@@ -22,20 +24,21 @@ public class Preferences {
 
     @Id
     @GeneratedValue
-    private long id;
+    @Type(type="org.hibernate.type.UUIDCharType")
+    private UUID id;
 
-    @OneToOne
+    @OneToOne(mappedBy = "preferences")
     private User user;
 
     @ElementCollection(targetClass = HealthLabel.class)
-    @JoinTable(name = "healthLabels", joinColumns = @JoinColumn(name = "id"))
+    @JoinTable(name = "health_labels", joinColumns = @JoinColumn(name = "id"))
     @Enumerated(EnumType.STRING)
-    private List<HealthLabel> allergies = new ArrayList<>();
+    private List<HealthLabel> allergies;
 
     @ElementCollection(targetClass = DietLabel.class)
-    @JoinTable(name = "dietLabels", joinColumns = @JoinColumn(name = "id"))
+    @JoinTable(name = "diet_labels", joinColumns = @JoinColumn(name = "id"))
     @Enumerated(EnumType.STRING)
-    private List<DietLabel> dietLabels = new ArrayList<>();
+    private List<DietLabel> dietLabels;
 
     private int countMealsPerDay;
 
@@ -49,18 +52,10 @@ public class Preferences {
     }
 
     public Preferences() {
-    }
-
-    public void setCountMealsPerDay(int countMealsPerDay) {
-        this.countMealsPerDay = countMealsPerDay;
-    }
-
-    public void setCountCaloriesPerDay(int countCaloriesPerDay) {
-        this.countCaloriesPerDay = countCaloriesPerDay;
-    }
-
-    public void addHealthLabelToPreferences(HealthLabel healthLabel) {
-        allergies.add(healthLabel);
+        this.countCaloriesPerDay = 1500;
+        this.countMealsPerDay = 3;
+        this.allergies = new ArrayList<>();
+        this.dietLabels = new ArrayList<>();
     }
 
     public void addDietLabelToPreferences(DietLabel dietLabel) {
@@ -81,10 +76,6 @@ public class Preferences {
 
     public int getCountCaloriesPerDay() {
         return countCaloriesPerDay;
-    }
-
-    public void setAllergies(List<HealthLabel> allergies) {
-        this.allergies = allergies;
     }
 
     public void setDietLabels(List<DietLabel> dietLabels) {

@@ -17,15 +17,8 @@ public class Recipe {
         return ingredients;
     }
 
-    public void setIngredients(List<String> ingredients) {
-        this.ingredients = ingredients;
-    }
-
     private Map<String, String[]> mapOfLabels;
     private Map<String,Integer> mapOfNutrients;
-
-    public Recipe() {
-    }
 
     public Recipe(String name) {
         this.name = name;

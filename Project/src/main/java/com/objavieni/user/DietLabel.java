@@ -1,8 +1,9 @@
 package com.objavieni.user;
 
 
+import javax.persistence.Table;
 
-
+@Table(name = "diet_label")
 public enum DietLabel {
 
     BALANCED("balanced"),
