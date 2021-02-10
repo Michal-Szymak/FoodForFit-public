@@ -145,8 +145,9 @@ public class IndexController {
     public String loginP(@ModelAttribute UserDto userDto){
         loggedUser = userService.findByName(userDto.getName());
         log.info("Logged user: " + loggedUser);
-        log.info("Logged user pref: " + loggedUser.getPreferencesDto());
+
         if (loggedUser != null) {
+            log.info("Logged user pref: " + loggedUser.getPreferencesDto());
             log.info("logged , redirecting to profile");
             return "redirect:profile";
         } else {
