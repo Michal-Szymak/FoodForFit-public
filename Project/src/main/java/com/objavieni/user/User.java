@@ -3,21 +3,16 @@ package com.objavieni.user;
 import com.objavieni.dto.UserDto;
 import lombok.Data;
 import org.hibernate.annotations.Type;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
 import java.util.UUID;
-
 import static com.objavieni.functions.PreferencesFunction.dtoToPreferences;
 
 @Data
@@ -37,16 +32,7 @@ public class User {
     private String gender;
     private int age;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "preferences_id", referencedColumnName = "id")
-//    private Preferences preferences = new Preferences();
-
-//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-//    @PrimaryKeyJoinColumn
-//    private Preferences preferences = new Preferences();
-
     @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "preferences_id", referencedColumnName = "id")
     @JoinTable(name = "user_preferences",
             joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
             inverseJoinColumns = { @JoinColumn(name = "preferences_id", referencedColumnName = "id") }
@@ -62,16 +48,6 @@ public class User {
         this.gender = gender;
         this.age = age;
         this.preferences = preferences;
-
-    }
-
-
-    public User(UserDto userDto) {
-        this.id = userDto.getId();
-        this.name = userDto.getName();
-        this.gender = userDto.getGender();
-        this.age = userDto.getAge();
-        this.preferences = dtoToPreferences.apply(userDto.getPreferencesDto());
     }
 
     public String getName() {

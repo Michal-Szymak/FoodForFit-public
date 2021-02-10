@@ -7,7 +7,6 @@ import java.util.function.Function;
 
 public class PreferencesFunction {
     public static final Function<Preferences, PreferencesDto> preferencesToDto = preferences -> new PreferencesDto(
-            //preferences.getId(),
             preferences.getAllergies(),
             preferences.getDietLabels(),
             preferences.getCountMealsPerDay(),

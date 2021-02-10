@@ -11,9 +11,6 @@ public class Meal{
         this.recipe = recipe;
     }
 
-    public Meal() {
-    }
-
     public int getCalories(){
         return recipe.getCaloriesPerMeal();
     }
@@ -25,26 +22,11 @@ public class Meal{
         }
         return map;
     }
-    public String[] getHealthLabels(){
-        return recipe.getMapOfLabels().get("Health Labels");
-    }
     public String[] getDietLabels(){
         return recipe.getMapOfLabels().get("Diet Labels");
     }
     public String[] getIngredients(){
         return recipe.getMapOfLabels().get("Ingredients");
-    }
-    public List<String> getIngredientsFromArray(){
-        return recipe.getIngredients();
-    }
-
-    public String getIngredientsAsString(){
-        String text = "";
-
-        for (String s : getIngredients()) {
-            text += s + "\n";
-        }
-        return text;
     }
 
     @Override
@@ -54,6 +36,7 @@ public class Meal{
                 + getCalories() + ", nutrients : "
                 + getMapOfNutrients();
     }
+
     public Boolean isInCaloricDiff(int caloriesDiff,int caloriesPerDay){
         if ((getCalories() > (caloriesPerDay - caloriesDiff)) && (getCalories() < (caloriesPerDay + caloriesDiff))){
             return true;

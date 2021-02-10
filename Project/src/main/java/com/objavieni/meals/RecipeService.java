@@ -4,7 +4,6 @@ import com.objavieni.dto.PreferencesDto;
 import com.objavieni.parsing.Parser;
 import com.objavieni.request.Request;
 import com.objavieni.request.RequestManager;
-import com.objavieni.user.Preferences;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -12,23 +11,13 @@ import java.util.List;
 @Slf4j
 public class RecipeService {
     Request myRequest = new Request();
-    PreferencesDto userPreferences = new PreferencesDto();
+    PreferencesDto userPreferences;
     RequestManager requestManager = new RequestManager();
     List<String> responseList;
     List<Recipe> recipeList = new ArrayList<>(1000);
 
-    public RecipeService(Request myRequest, RequestManager requestManager) {
-        this.myRequest = myRequest;
-        this.requestManager = requestManager;
-        load();
-    }
-
     public RecipeService(PreferencesDto userPreferences) {
         this.userPreferences = userPreferences;
-        load();
-    }
-
-    public RecipeService() {
         load();
     }
 
@@ -48,20 +37,8 @@ public class RecipeService {
         return recipeList;
     }
 
-    public PreferencesDto getUserPreferences() {
-        return userPreferences;
-    }
-
-    public void setUserPreferences(PreferencesDto userPreferences) {
-        this.userPreferences = userPreferences;
-    }
-
     public void setNumberOfRecipiesToBeDownloaded(int number){
         myRequest.setRecipesToDownload(number);
     }
 
-    public void setNumberOfRecipiesToBeDownloadedWithOffset(int number, int offset){
-        myRequest.setOffset(number);
-        myRequest.setRecipesToDownload(number + offset);
-    }
 }

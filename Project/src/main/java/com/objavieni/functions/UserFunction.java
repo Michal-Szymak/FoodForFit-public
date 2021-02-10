@@ -2,9 +2,7 @@ package com.objavieni.functions;
 
 import com.objavieni.dto.UserDto;
 import com.objavieni.user.User;
-
 import java.util.function.Function;
-
 import static com.objavieni.functions.PreferencesFunction.dtoToPreferences;
 import static com.objavieni.functions.PreferencesFunction.preferencesToDto;
 

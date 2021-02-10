@@ -1,9 +1,5 @@
 package com.objavieni.request;
 
-import kong.unirest.json.JSONObject;
-import org.apache.tomcat.util.json.JSONParser;
-import org.apache.tomcat.util.json.ParseException;
-
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;

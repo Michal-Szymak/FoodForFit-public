@@ -2,11 +2,11 @@ package com.objavieni.parsing;
 
 import com.objavieni.meals.Recipe;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @Slf4j
 public class Parser {
 

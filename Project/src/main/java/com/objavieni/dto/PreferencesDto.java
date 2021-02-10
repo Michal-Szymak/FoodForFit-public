@@ -28,7 +28,6 @@ public class PreferencesDto {
     private int countCaloriesPerDay;
 
     public PreferencesDto( List<HealthLabel> allergies, List<DietLabel> dietLabels, int countMealsPerDay, int countCaloriesPerDay) {
-        //this.id = id;
         this.allergies = allergies;
         this.dietLabels = dietLabels;
         this.countMealsPerDay = countMealsPerDay;

@@ -3,20 +3,16 @@ package com.objavieni.request;
 import com.objavieni.dto.PreferencesDto;
 import com.objavieni.user.DietLabel;
 import com.objavieni.user.HealthLabel;
-import com.objavieni.user.Preferences;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class Request {
     private static final String DIET_LABEL_KEY = "diet";
-    // "healt" is not a typo! This is query parameter defined in API
     private static final String HEALTH_LABEL_KEY = "healt";
     private static final String CALORIES_KEY = "calories";
     private static final int ACCEPTABLE_CALORIES_DIFFERENCE = 100;
     private List<RequestParameter> searchCriteria = new ArrayList<>();
-    // max 100 recipes in one request are allowed by API
     private int recipesToDownload = 10;
     private int offset = 0;
 
@@ -62,16 +58,8 @@ public class Request {
         return result;
     }
 
-    public int getOffset() {
-        return offset;
-    }
-
     public void setOffset(int offset) {
         this.offset = offset;
-    }
-
-    public int getRecipesToDownload() {
-        return recipesToDownload;
     }
 
     public void setRecipesToDownload(int recipesToDownload) {

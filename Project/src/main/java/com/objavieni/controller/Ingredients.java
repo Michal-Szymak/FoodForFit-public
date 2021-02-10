@@ -1,20 +1,10 @@
 package com.objavieni.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Ingredients {
     private List<String> list;
     private String listAsString;
-
-    public String getListAsString() {
-        return listAsString;
-    }
-
-    public void setListAsString(String listAsString) {
-        this.listAsString = listAsString;
-    }
-
     public List<String> getList() {
         return list;
     }

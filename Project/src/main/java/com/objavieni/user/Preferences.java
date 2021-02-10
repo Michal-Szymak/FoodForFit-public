@@ -11,8 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.MapsId;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
@@ -32,20 +30,15 @@ public class Preferences {
     @OneToOne(mappedBy = "preferences")
     private User user;
 
-//    @OneToOne
-//    @MapsId
-//    @JoinColumn(name = "user_id")
-//    private User user;
-
     @ElementCollection(targetClass = HealthLabel.class)
     @JoinTable(name = "health_labels", joinColumns = @JoinColumn(name = "id"))
     @Enumerated(EnumType.STRING)
-    private List<HealthLabel> allergies = new ArrayList<>();
+    private List<HealthLabel> allergies;
 
     @ElementCollection(targetClass = DietLabel.class)
     @JoinTable(name = "diet_labels", joinColumns = @JoinColumn(name = "id"))
     @Enumerated(EnumType.STRING)
-    private List<DietLabel> dietLabels = new ArrayList<>();
+    private List<DietLabel> dietLabels;
 
     private int countMealsPerDay;
 
@@ -63,18 +56,6 @@ public class Preferences {
         this.countMealsPerDay = 3;
         this.allergies = new ArrayList<>();
         this.dietLabels = new ArrayList<>();
-    }
-
-    public void setCountMealsPerDay(int countMealsPerDay) {
-        this.countMealsPerDay = countMealsPerDay;
-    }
-
-    public void setCountCaloriesPerDay(int countCaloriesPerDay) {
-        this.countCaloriesPerDay = countCaloriesPerDay;
-    }
-
-    public void addHealthLabelToPreferences(HealthLabel healthLabel) {
-        allergies.add(healthLabel);
     }
 
     public void addDietLabelToPreferences(DietLabel dietLabel) {
@@ -95,10 +76,6 @@ public class Preferences {
 
     public int getCountCaloriesPerDay() {
         return countCaloriesPerDay;
-    }
-
-    public void setAllergies(List<HealthLabel> allergies) {
-        this.allergies = allergies;
     }
 
     public void setDietLabels(List<DietLabel> dietLabels) {
