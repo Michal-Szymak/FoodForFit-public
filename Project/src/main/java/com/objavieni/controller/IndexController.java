@@ -6,7 +6,6 @@ import com.objavieni.mealDistribution.MealDistributor;
 import com.objavieni.meals.DailyMeals;
 import com.objavieni.meals.Recipe;
 import com.objavieni.meals.RecipeService;
-import com.objavieni.service.PreferencesService;
 import com.objavieni.service.UserService;
 import com.objavieni.user.*;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +30,7 @@ public class IndexController {
     public Ingredients ingredients;
     public UserDto loggedUser;
 
-    public IndexController(UserService userService, PreferencesService preferencesService) {
+    public IndexController(UserService userService) {
         this.userService = userService;
     }
 
@@ -52,8 +51,12 @@ public class IndexController {
 
     @GetMapping("/calendar")
     public String getIndex(Model model){
-
-        List<DailyMeals> list = mealDistributor.getWeeklyMeals().getDailyMealsList();
+        List<DailyMeals> list = new ArrayList<>();
+        if (loggedUser.getPreferencesDto().getCountMealsPerDay() != 0){
+            recipeService = setRecipeService(loggedUser.getPreferencesDto());
+            mealDistributor = setMealDistributor(recipeService.getRecipeList(),loggedUser.getPreferencesDto());
+            list = mealDistributor.getWeeklyMeals().getDailyMealsList();
+        }
         model.addAttribute("weeklyMeals",list);
         model.addAttribute("ingredients",new Ingredients());
         return "calendar";
@@ -95,8 +98,7 @@ public class IndexController {
         this.preferencesDto = preferencesDto;
         log.info("preferences loaded  : " + preferencesDto.getDietLabels() + " ### " + preferencesDto.getAllergies() );
         loggedUser = userService.updateUser(loggedUser.getId(),preferencesDto);
-        recipeService = setRecipeService(preferencesDto);
-        mealDistributor = setMealDistributor(recipeService.getRecipeList(),preferencesDto);
+
         return "redirect:profile";
     }
 

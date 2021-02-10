@@ -1,6 +1,5 @@
 package com.objavieni.user;
 
-import com.objavieni.dto.UserDto;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 import javax.persistence.CascadeType;
@@ -13,7 +12,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.UUID;
-import static com.objavieni.functions.PreferencesFunction.dtoToPreferences;
 
 @Data
 @Entity
@@ -62,16 +60,8 @@ public class User {
         return gender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
     public int getAge() {
         return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public Preferences getPreferences() {
