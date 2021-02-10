@@ -1,6 +1,7 @@
 package com.objavieni.user;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -10,11 +11,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 @Data
 @Entity
 @Table(name = "preferences")
@@ -22,11 +26,16 @@ public class Preferences {
 
     @Id
     @GeneratedValue
-    private long id;
+    @Type(type="org.hibernate.type.UUIDCharType")
+    private UUID id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "preferences")
     private User user;
+
+//    @OneToOne
+//    @MapsId
+//    @JoinColumn(name = "user_id")
+//    private User user;
 
     @ElementCollection(targetClass = HealthLabel.class)
     @JoinTable(name = "health_labels", joinColumns = @JoinColumn(name = "id"))
@@ -50,6 +59,10 @@ public class Preferences {
     }
 
     public Preferences() {
+        this.countCaloriesPerDay = 1500;
+        this.countMealsPerDay = 3;
+        this.allergies = new ArrayList<>();
+        this.dietLabels = new ArrayList<>();
     }
 
     public void setCountMealsPerDay(int countMealsPerDay) {

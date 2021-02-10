@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 import static com.objavieni.functions.PreferencesFunction.preferencesToDto;
 
 
@@ -13,7 +15,7 @@ import static com.objavieni.functions.PreferencesFunction.preferencesToDto;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
-    private long id;
+    private UUID id;
     private String name;
 
     private String gender;
@@ -29,7 +31,7 @@ public class UserDto {
         this.preferencesDto = preferencesToDto.apply(user.getPreferences());
     }
 
-    public UserDto(long id, String name, String gender, int age) {
+    public UserDto(UUID id, String name, String gender, int age) {
         this.id = id;
         this.name = name;
         this.gender = gender;

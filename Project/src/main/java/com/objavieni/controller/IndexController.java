@@ -87,6 +87,10 @@ public class IndexController {
     }
     @GetMapping("/profile")
     public String getProfile(Model model){
+        ////////////////////////////////
+        log.info("Logged user: " + loggedUser.toString());
+        log.info(model.toString());
+        ////////////////////////////////
         model.addAttribute("user", loggedUser);
         model.addAttribute("dietLabels", loggedUser.getPreferencesDto().getDietLabels());
         model.addAttribute("allergies", loggedUser.getPreferencesDto().getAllergies());
@@ -119,7 +123,7 @@ public class IndexController {
     @PostMapping("savePreferences")
     public String savePreferences(@ModelAttribute PreferencesDto preferencesDto) throws UserNotFoundException {
         this.preferencesDto = preferencesDto;
-        log.info("preferences loaded  : " + preferencesDto.getDietLabels() + "\n" + preferencesDto.getAllergies() );
+        log.info("preferences loaded  : " + preferencesDto.getDietLabels() + " ### " + preferencesDto.getAllergies() );
         //loggedUser.setPreferencesDto(preferencesDto);
         loggedUser = userService.updateUser(loggedUser.getId(),preferencesDto);
         //loggedUser = userService.updateUser(loggedUser);
@@ -173,6 +177,11 @@ public class IndexController {
     @PostMapping("loginUser")
     public String loginP(@ModelAttribute UserDto userDto){
         loggedUser = userService.findByName(userDto.getName());
+        ////////////////////////////////
+        log.info("Logged user: " + loggedUser);
+        log.info("Logged user pref: " + loggedUser.getPreferencesDto());
+        ////////////////////////////////
+
         //loggedUser.setPreferencesDto(new PreferencesDto());
         if (loggedUser != null) {
             log.info("logged , redirecting to profile");

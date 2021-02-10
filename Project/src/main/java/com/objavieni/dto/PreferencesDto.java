@@ -8,20 +8,18 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PreferencesDto {
 
-    private long id;
-
+    private UUID id;
 
     private UserDto userDto;
 
-
     private List<HealthLabel> allergies = new ArrayList<>();
-
 
     private List<DietLabel> dietLabels = new ArrayList<>();
 
