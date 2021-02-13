@@ -1,13 +1,15 @@
 package com.objavieni.meals;
 
 import com.objavieni.dto.PreferencesDto;
-import com.objavieni.parsing.Parser;
+import com.objavieni.parsing.RecipeParser;
 import com.objavieni.request.Request;
 import com.objavieni.request.RequestManager;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Slf4j
 public class RecipeService {
     Request myRequest = new Request();
@@ -21,14 +23,25 @@ public class RecipeService {
         load();
     }
 
-    public void load(){
+//    public void load(){
+//        myRequest.addUserPreferences(userPreferences);
+//        myRequest.setOffset(0);
+//        myRequest.setRecipesToDownload(100);
+//        responseList = new ArrayList<>();
+//        responseList = requestManager.getResponse(myRequest);
+//        for (String s : responseList) {
+//            recipeList.add(new Parser().recipeParser(s));
+//        }
+//        log.info("recipe list size : " + recipeList.size());
+//    }
+
+    public void load() {
         myRequest.addUserPreferences(userPreferences);
         myRequest.setOffset(0);
         myRequest.setRecipesToDownload(100);
-        responseList = new ArrayList<>();
-        responseList = requestManager.getResponse(myRequest);
-        for (String s : responseList) {
-            recipeList.add(new Parser().recipeParser(s));
+        Optional<String> responseOptional = requestManager.getResponseTwo(myRequest);
+        if (responseOptional.isPresent()) {
+            recipeList = new RecipeParser().getRecipeListFromString(responseOptional.get());
         }
         log.info("recipe list size : " + recipeList.size());
     }
@@ -37,7 +50,7 @@ public class RecipeService {
         return recipeList;
     }
 
-    public void setNumberOfRecipiesToBeDownloaded(int number){
+    public void setNumberOfRecipiesToBeDownloaded(int number) {
         myRequest.setRecipesToDownload(number);
     }
 

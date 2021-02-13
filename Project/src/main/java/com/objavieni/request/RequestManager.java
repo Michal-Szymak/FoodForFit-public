@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class RequestManager {
 
-    public static List<String> getResponse(Request request) {
+    public List<String> getResponse(Request request) {
         List<String> result = new ArrayList<>();
         Optional<HttpRequest> httpRequestOptional = createHttpRequest(request);
         if(httpRequestOptional.isPresent()) {
@@ -19,6 +19,15 @@ public class RequestManager {
         }
         return result;
     }
+
+    ////////////////////////////
+    public Optional<String> getResponseTwo(Request request) {
+        Optional<HttpRequest> httpRequestOptional = createHttpRequest(request);
+        if(httpRequestOptional.isPresent()) {
+            return ResponseManager.getResponseStringFromServer(httpRequestOptional.get());
+        } else return Optional.empty();
+    }
+    ////////////////////////////
 
     private static Optional<HttpRequest> createHttpRequest(Request request) {
         try {

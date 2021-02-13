@@ -19,4 +19,10 @@ public class ErrorHandler {
 
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(InvalidApiResponseException.class)
+    public void invalidApiResponseException(){
+
+    }
+
 }

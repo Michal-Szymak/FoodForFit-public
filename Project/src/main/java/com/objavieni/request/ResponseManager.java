@@ -25,7 +25,7 @@ public class ResponseManager {
         return result;
     }
 
-    private static Optional<String> getResponseStringFromServer(HttpRequest request) {
+    public static Optional<String> getResponseStringFromServer(HttpRequest request) {
         try {
             HttpResponse<String> response = HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
             return Optional.of(response.body());

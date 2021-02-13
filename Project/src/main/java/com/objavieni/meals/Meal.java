@@ -22,10 +22,10 @@ public class Meal{
         }
         return map;
     }
-    public String[] getDietLabels(){
+    public List<String> getDietLabels(){
         return recipe.getMapOfLabels().get("Diet Labels");
     }
-    public String[] getIngredients(){
+    public List<String> getIngredients(){
         return recipe.getMapOfLabels().get("Ingredients");
     }
 

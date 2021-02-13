@@ -17,25 +17,20 @@ public class Recipe {
         return ingredients;
     }
 
-    private Map<String, String[]> mapOfLabels;
+    private Map<String, List<String>> mapOfLabels;
     private Map<String,Integer> mapOfNutrients;
 
     public Recipe(String name) {
         this.name = name;
     }
 
-    public Recipe(int calories, int yield) {
-        this.calories = calories;
-        this.yield = yield;
-    }
-
-    public Recipe(Map<String, String[]> mapOfLabels) {
+    public Recipe(Map<String, List<String>> mapOfLabels) {
         this.mapOfLabels = mapOfLabels;
     }
 
     public Recipe(String imgSrc, String name, int calories, int totalWeight
             , int yield, Map<String, Integer> mapOfNutrients
-            , Map<String, String[]> mapOfLabels,List<String> ingredients) {
+            , Map<String, List<String>> mapOfLabels,List<String> ingredients) {
         this.name = name;
         this.calories = calories;
         this.totalWeight = totalWeight;
@@ -65,9 +60,9 @@ public class Recipe {
         }
         for (String s : mapOfLabels.keySet()) {
 //            sb.append(s + ": ");
-            sb.append(s + ": " + mapOfLabels.get(s).length + " ");
-            String[] tab = mapOfLabels.get(s);
-            for (String s2 : tab) {
+            sb.append(s + ": " + mapOfLabels.get(s).size() + " ");
+            List<String> list = mapOfLabels.get(s);
+            for (String s2 : list) {
                 sb.append(s2);
             }
             sb.append(System.lineSeparator());
@@ -84,7 +79,7 @@ public class Recipe {
         return yield;
     }
 
-    public Map<String, String[]> getMapOfLabels() {
+    public Map<String, List<String>> getMapOfLabels() {
         return mapOfLabels;
     }
 

@@ -20,8 +20,8 @@ class DailyMealsTest {
 
     private static final class Fixtures {
 
-        private static final Map<String, String[]> INGREDIENTS_MAP =
-                Collections.singletonMap("Ingredients", new String[]{"ingridient1, ingridient2"});
+        private static final Map<String, List<String>> INGREDIENTS_MAP =
+                Collections.singletonMap("Ingredients", List.of("ingredient1, ingredient2"));
         private static final Recipe RECIPE_WITH_INGRIDIENTS = new Recipe(INGREDIENTS_MAP);
 
         private static final Meal MEAL_WITH_INGRIDIENTS = new Meal(RECIPE_WITH_INGRIDIENTS);

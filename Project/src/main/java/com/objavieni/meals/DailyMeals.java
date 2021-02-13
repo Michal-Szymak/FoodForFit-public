@@ -12,7 +12,8 @@ public class DailyMeals {
 
     public String[] getDailyIngredients() {
         List<String> list = new ArrayList<>();
-        mealList.forEach(x -> list.addAll(Arrays.asList(x.getIngredients())));
+//        mealList.forEach(x -> list.addAll(Arrays.asList(x.getIngredients())));
+        mealList.forEach(x -> list.addAll(x.getIngredients()));
         return list.toArray(new String[0]);
     }
 
