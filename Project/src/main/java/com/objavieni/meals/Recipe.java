@@ -13,6 +13,11 @@ public class Recipe {
     private String imgSrc;
     private List<String> ingredients;
 
+    public Recipe(int calories, int yield) {
+        this.calories = calories;
+        this.yield = yield;
+    }
+
     public List<String> getIngredients() {
         return ingredients;
     }
