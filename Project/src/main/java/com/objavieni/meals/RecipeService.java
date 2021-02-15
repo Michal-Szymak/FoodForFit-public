@@ -1,6 +1,7 @@
 package com.objavieni.meals;
 
 import com.objavieni.dto.PreferencesDto;
+import com.objavieni.error.InvalidApiResponseException;
 import com.objavieni.parsing.RecipeParser;
 import com.objavieni.request.Request;
 import com.objavieni.request.RequestManager;
@@ -18,7 +19,7 @@ public class RecipeService {
     List<String> responseList;
     List<Recipe> recipeList = new ArrayList<>(1000);
 
-    public RecipeService(PreferencesDto userPreferences) {
+    public RecipeService(PreferencesDto userPreferences) throws InvalidApiResponseException {
         this.userPreferences = userPreferences;
         load();
     }
@@ -35,7 +36,7 @@ public class RecipeService {
 //        log.info("recipe list size : " + recipeList.size());
 //    }
 
-    public void load() {
+    public void load() throws InvalidApiResponseException {
         myRequest.addUserPreferences(userPreferences);
         myRequest.setOffset(0);
         myRequest.setRecipesToDownload(100);

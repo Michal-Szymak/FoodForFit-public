@@ -1,6 +1,7 @@
 package com.objavieni.controller;
 import com.objavieni.dto.PreferencesDto;
 import com.objavieni.dto.UserDto;
+import com.objavieni.error.InvalidApiResponseException;
 import com.objavieni.error.UserNotFoundException;
 import com.objavieni.mealDistribution.MealDistributor;
 import com.objavieni.meals.DailyMeals;
@@ -34,7 +35,7 @@ public class IndexController {
         this.userService = userService;
     }
 
-    private RecipeService setRecipeService(PreferencesDto preferencesDto) {
+    private RecipeService setRecipeService(PreferencesDto preferencesDto) throws InvalidApiResponseException {
         log.info("setting service");
         RecipeService recipeService = new RecipeService(preferencesDto);
         recipeService.setNumberOfRecipiesToBeDownloaded(1000);
@@ -50,7 +51,7 @@ public class IndexController {
     }
 
     @GetMapping("/calendar")
-    public String getIndex(Model model){
+    public String getIndex(Model model) throws InvalidApiResponseException {
         List<DailyMeals> list = new ArrayList<>();
         if (loggedUser.getPreferencesDto().getCountMealsPerDay() != 0){
             recipeService = setRecipeService(loggedUser.getPreferencesDto());
