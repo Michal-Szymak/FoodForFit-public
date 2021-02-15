@@ -16,6 +16,7 @@ public class Request {
     private int recipesToDownload = 10;
     private int offset = 0;
 
+    //TODO move keys of applciation to properties
     public Request() {
         searchCriteria.add(new RequestParameter("app_id", "900da95e"));
         searchCriteria.add(new RequestParameter("app_key", "40698503668e0bb3897581f4766d77f9"));

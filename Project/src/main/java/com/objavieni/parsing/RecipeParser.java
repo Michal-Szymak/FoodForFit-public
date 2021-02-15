@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
+//TODO try to change for parsing with getForObject - opcionalnie
 public class RecipeParser {
 
     public List<Recipe> getRecipeListFromString(String apiResponse) throws InvalidApiResponseException {
-//        JSONObject jsonObject = new JSONObject(apiResponse);
         JSONArray jsonArray = new JSONObject(apiResponse).getJSONArray("hits");
         if(jsonArray.isEmpty()) {
             throw new InvalidApiResponseException();

@@ -1,7 +1,6 @@
 package com.objavieni.meals;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class DailyMeals {

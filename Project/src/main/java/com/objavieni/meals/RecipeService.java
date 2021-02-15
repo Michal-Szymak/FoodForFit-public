@@ -13,6 +13,8 @@ import java.util.Optional;
 
 @Slf4j
 public class RecipeService {
+    //TODO change to DI
+    //TODO magic numbers!!! :)
     Request myRequest = new Request();
     PreferencesDto userPreferences;
     RequestManager requestManager = new RequestManager();
@@ -24,23 +26,11 @@ public class RecipeService {
         load();
     }
 
-//    public void load(){
-//        myRequest.addUserPreferences(userPreferences);
-//        myRequest.setOffset(0);
-//        myRequest.setRecipesToDownload(100);
-//        responseList = new ArrayList<>();
-//        responseList = requestManager.getResponse(myRequest);
-//        for (String s : responseList) {
-//            recipeList.add(new Parser().recipeParser(s));
-//        }
-//        log.info("recipe list size : " + recipeList.size());
-//    }
-
     public void load() throws InvalidApiResponseException {
         myRequest.addUserPreferences(userPreferences);
         myRequest.setOffset(0);
         myRequest.setRecipesToDownload(100);
-        Optional<String> responseOptional = requestManager.getResponseTwo(myRequest);
+        Optional<String> responseOptional = requestManager.getResponse(myRequest);
         if (responseOptional.isPresent()) {
             recipeList = new RecipeParser().getRecipeListFromString(responseOptional.get());
         }

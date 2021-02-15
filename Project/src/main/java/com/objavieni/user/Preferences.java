@@ -52,8 +52,6 @@ public class Preferences {
     }
 
     public Preferences() {
-        this.countCaloriesPerDay = 1500;
-        this.countMealsPerDay = 3;
         this.allergies = new ArrayList<>();
         this.dietLabels = new ArrayList<>();
     }

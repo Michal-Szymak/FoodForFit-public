@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @NoArgsConstructor
 public class MealDistributor {
+
     public static final int DAYS_IN_WEEK = 7;
     public static final int ACCEPTABLE_CALORIES_DIFF = 100;
     private List<Meal> mealList;
@@ -28,7 +29,7 @@ public class MealDistributor {
         log.info("loading recipes to meallist");
         this.mealList = recipesToMeals(recipeList);
         log.info("distribute to weeklymeals");
-        this.weeklyMeals = distributeThree();
+        this.weeklyMeals = distribute();
     }
 
 
@@ -41,7 +42,7 @@ public class MealDistributor {
         return list;
     }
 
-    public WeeklyMeals distributeThree() {
+    public WeeklyMeals distribute() {
         WeeklyMeals weeklyMeals = new WeeklyMeals();
         int caloriesPerMeal = preferences.getCountCaloriesPerDay() / preferences.getCountMealsPerDay();
         List<Meal> acceptableMeals = mealList.stream()
@@ -63,7 +64,7 @@ public class MealDistributor {
     }
 
     private void getMealsForDayExceptLastOne(List<Meal> acceptableMeals, DailyMeals day) {
-        for (int j = 1; j < preferences.getCountMealsPerDay(); j++) {
+        for (int i = 1; i < preferences.getCountMealsPerDay(); i++) {
             int randomIndex = (int) (Math.random() * acceptableMeals.size());
             day.addMeal(acceptableMeals.get(randomIndex));
             acceptableMeals.remove(randomIndex);

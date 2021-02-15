@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public class ResponseManager {
 
+    //TODO remove if not needed
     public static List<String> getResponse(HttpRequest request) {
         Optional<String> response = getResponseStringFromServer(request);
         return response.isPresent() ? separateResponseToList(response.get()) : Collections.emptyList();
@@ -25,6 +26,7 @@ public class ResponseManager {
         return result;
     }
 
+    //TODO change to logs
     public static Optional<String> getResponseStringFromServer(HttpRequest request) {
         try {
             HttpResponse<String> response = HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());

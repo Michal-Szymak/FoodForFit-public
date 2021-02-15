@@ -47,7 +47,7 @@ class MealDistributorTest {
 
 
         //when
-        WeeklyMeals result =  mealDistributor.distributeThree();
+        WeeklyMeals result =  mealDistributor.distribute();
         boolean isCorrectQuantity = true;
         boolean isCorrectCalories = true;
         for (DailyMeals d : result.getDailyMealsList()) {
