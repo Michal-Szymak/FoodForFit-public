@@ -47,19 +47,6 @@ class DailyMealsTest {
         assertThat(dailyMeals.getMealList()).hasSameElementsAs(Fixtures.LIST_MEAL);
     }
 
-    @Test
-    void addOneIngriedientToMap_ReturnCorrectIngredient() {
-
-        DailyMeals dailyMeals = new DailyMeals();
-        String[] expectedIngredients = new String[]{"ingridient1, ingridient2"};
-
-        dailyMeals.addMeal(Fixtures.MEAL_WITH_INGRIDIENTS);
-
-        assertThat(dailyMeals.getDailyIngredients()).hasSameElementsAs(Arrays.asList(expectedIngredients));
-
-        // assertThat(dailyMeals.getDailyIngredients(), equalTo(expectedIngredients));          HARMCREAST
-
-    }
 
 
 }
