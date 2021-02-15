@@ -8,6 +8,7 @@ import static com.objavieni.functions.PreferencesFunction.dtoToPreferences;
 import static com.objavieni.functions.PreferencesFunction.preferencesToDto;
 import static org.junit.jupiter.api.Assertions.*;
 
+//TODO test quality improvement
 class PreferencesFunctionTest {
 
     @Test

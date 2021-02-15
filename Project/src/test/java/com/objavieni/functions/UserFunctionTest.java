@@ -8,6 +8,7 @@ import static com.objavieni.functions.UserFunction.dtoToUser;
 import static com.objavieni.functions.UserFunction.userToDto;
 import static org.junit.jupiter.api.Assertions.*;
 
+//TODO tests quality improvement
 class UserFunctionTest {
 
     @Test
