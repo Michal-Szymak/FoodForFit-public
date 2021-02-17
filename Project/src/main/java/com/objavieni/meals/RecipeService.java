@@ -5,12 +5,14 @@ import com.objavieni.error.InvalidApiResponseException;
 import com.objavieni.parsing.RecipeParser;
 import com.objavieni.request.Request;
 import com.objavieni.request.RequestManager;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@Service
 @Slf4j
 public class RecipeService {
     //TODO change to DI
@@ -19,17 +21,20 @@ public class RecipeService {
     PreferencesDto userPreferences;
     RequestManager requestManager = new RequestManager();
     List<String> responseList;
-    List<Recipe> recipeList = new ArrayList<>(1000);
+    List<Recipe> recipeList = new ArrayList<>(100);
 
-    public RecipeService(PreferencesDto userPreferences) throws InvalidApiResponseException {
-        this.userPreferences = userPreferences;
-        load();
+//    public RecipeService(PreferencesDto userPreferences) throws InvalidApiResponseException {
+//        this.userPreferences = userPreferences;
+//        load();
+//    }
+
+    public RecipeService() throws InvalidApiResponseException {
+       // load();
     }
 
     public void load() throws InvalidApiResponseException {
         myRequest.addUserPreferences(userPreferences);
         myRequest.setOffset(0);
-        myRequest.setRecipesToDownload(100);
         Optional<String> responseOptional = requestManager.getResponse(myRequest);
         if (responseOptional.isPresent()) {
             recipeList = new RecipeParser().getRecipeListFromString(responseOptional.get());
@@ -41,8 +46,9 @@ public class RecipeService {
         return recipeList;
     }
 
-    public void setNumberOfRecipiesToBeDownloaded(int number) {
-        myRequest.setRecipesToDownload(number);
-    }
 
+    public void setPreferences(PreferencesDto preferencesDto) throws InvalidApiResponseException {
+        this.userPreferences = preferencesDto;
+        load();
+    }
 }

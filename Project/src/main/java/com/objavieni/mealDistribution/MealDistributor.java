@@ -7,31 +7,26 @@ import com.objavieni.meals.Recipe;
 import com.objavieni.meals.WeeklyMeals;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+@Component
 @Slf4j
 @NoArgsConstructor
 public class MealDistributor {
 
     public static final int DAYS_IN_WEEK = 7;
     public static final int ACCEPTABLE_CALORIES_DIFF = 100;
+    @Value("${diff}")
+    String diff;
     private List<Meal> mealList;
     private PreferencesDto preferences;
     private WeeklyMeals weeklyMeals;
-
-    public MealDistributor(List<Recipe> recipeList, PreferencesDto preferences) {
-        log.info("loading preferendes to distributor");
-        this.preferences = preferences;
-        log.info("loading recipes to meallist");
-        this.mealList = recipesToMeals(recipeList);
-        log.info("distribute to weeklymeals");
-        this.weeklyMeals = distribute();
-    }
-
 
     private List<Meal> recipesToMeals(List<Recipe> recipeList) {
         List<Meal> mealList = new ArrayList<>();
@@ -51,6 +46,7 @@ public class MealDistributor {
 
         getDailyMealsForWeek(weeklyMeals, acceptableMeals);
         printWeeklyMealsLog(weeklyMeals);
+        log.info("/////////  Diff = " + diff);
         return weeklyMeals;
     }
 
@@ -103,5 +99,14 @@ public class MealDistributor {
 
     public WeeklyMeals getWeeklyMeals() {
         return weeklyMeals;
+    }
+
+    public void setDataToCompute(List<Recipe> recipeList, PreferencesDto preferencesDto) {
+        log.info("loading preferendes to distributor");
+        this.preferences = preferencesDto;
+        log.info("loading recipes to meallist");
+        this.mealList = recipesToMeals(recipeList);
+        log.info("distribute to weeklymeals");
+        this.weeklyMeals = distribute();
     }
 }

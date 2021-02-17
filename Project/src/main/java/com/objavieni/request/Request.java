@@ -13,7 +13,7 @@ public class Request {
     private static final String CALORIES_KEY = "calories";
     private static final int ACCEPTABLE_CALORIES_DIFFERENCE = 100;
     private List<RequestParameter> searchCriteria = new ArrayList<>();
-    private int recipesToDownload = 10;
+    private int recipesToDownload = 100;
     private int offset = 0;
 
     //TODO move keys of applciation to properties
@@ -63,7 +63,5 @@ public class Request {
         this.offset = offset;
     }
 
-    public void setRecipesToDownload(int recipesToDownload) {
-        this.recipesToDownload = recipesToDownload;
-    }
+
 }

@@ -1,11 +1,12 @@
 package com.objavieni.controller;
+
+import com.objavieni.configuration.PropertiesConfiguration;
 import com.objavieni.dto.PreferencesDto;
 import com.objavieni.dto.UserDto;
 import com.objavieni.error.InvalidApiResponseException;
 import com.objavieni.error.UserNotFoundException;
 import com.objavieni.mealDistribution.MealDistributor;
 import com.objavieni.meals.DailyMeals;
-import com.objavieni.meals.Recipe;
 import com.objavieni.meals.RecipeService;
 import com.objavieni.service.UserService;
 import com.objavieni.user.*;
@@ -24,39 +25,28 @@ import java.util.List;
 public class IndexController {
 
     private final UserService userService;
-
-    public PreferencesDto preferencesDto = new PreferencesDto();
     public RecipeService recipeService;
-    public MealDistributor mealDistributor = new MealDistributor();
+    public MealDistributor mealDistributor;
+    public final PropertiesConfiguration propertiesConfiguration;
+
     public Ingredients ingredients;
     public UserDto loggedUser;
 
-    public IndexController(UserService userService) {
+    public IndexController(UserService userService, RecipeService recipeService, MealDistributor mealDistributor, PropertiesConfiguration propertiesConfiguration) {
         this.userService = userService;
+        this.recipeService = recipeService;
+        this.mealDistributor = mealDistributor;
+        this.propertiesConfiguration = propertiesConfiguration;
+        log.info("password = " + propertiesConfiguration.getPassword());
     }
 
-    private RecipeService setRecipeService(PreferencesDto preferencesDto) throws InvalidApiResponseException {
-        log.info("setting service");
-        RecipeService recipeService = new RecipeService(preferencesDto);
-        //TODO magic number to constant or preferences
-        recipeService.setNumberOfRecipiesToBeDownloaded(1000);
-        log.info("service set");
-        return recipeService;
-    }
-
-    private MealDistributor setMealDistributor(List<Recipe> recipeList, PreferencesDto preferences) {
-        log.info("setting distributor, recipe list size " + recipeList.size());
-        MealDistributor mealDistributor = new MealDistributor(recipeList,preferences);
-        log.info("distributor set");
-        return mealDistributor;
-    }
 
     @GetMapping("/calendar")
     public String getIndex(Model model) throws InvalidApiResponseException {
         List<DailyMeals> list = new ArrayList<>();
         if (loggedUser.getPreferencesDto().getCountMealsPerDay() != 0){
-            recipeService = setRecipeService(loggedUser.getPreferencesDto());
-            mealDistributor = setMealDistributor(recipeService.getRecipeList(),loggedUser.getPreferencesDto());
+            recipeService.setPreferences(loggedUser.getPreferencesDto());
+            mealDistributor.setDataToCompute(recipeService.getRecipeList(),loggedUser.getPreferencesDto());
             list = mealDistributor.getWeeklyMeals().getDailyMealsList();
         }
         model.addAttribute("weeklyMeals",list);
@@ -78,30 +68,17 @@ public class IndexController {
 
     @GetMapping("/diet")
     public String getDiet(Model model){
-        Arrays.asList(HealthLabel.values().clone());
-        List<List<HealthLabel>> healthLabelListToShow = new ArrayList<>();
-        //TODO 3 = numberOfColumns
-        for (int i = 0; i < HealthLabel.values().length - 3; i+=3){
-            List<HealthLabel> list = new ArrayList<>();
-            list.add(HealthLabel.values()[i]);
-            list.add(HealthLabel.values()[i+1]);
-            list.add(HealthLabel.values()[i+2]);
-            healthLabelListToShow.add(list);
-        }
-        List<DietLabel> dietLabelListToShow = new ArrayList<>(Arrays.asList(DietLabel.values()));
-        model.addAttribute("healthListsList",healthLabelListToShow);
-        model.addAttribute("diet",dietLabelListToShow);
+        model.addAttribute("healthListsList",getHealthLabelListToShow());
+        model.addAttribute("diet",Arrays.asList(DietLabel.values()));
         model.addAttribute("preferences",new Preferences());
-        model.addAttribute("myPreferences",preferencesDto);
+        model.addAttribute("myPreferences",loggedUser.getPreferencesDto());
         return "diet";
     }
 
     @PostMapping("savePreferences")
     public String savePreferences(@ModelAttribute PreferencesDto preferencesDto) throws UserNotFoundException {
-        this.preferencesDto = preferencesDto;
         log.info("preferences loaded  : " + preferencesDto.getDietLabels() + " ### " + preferencesDto.getAllergies() );
         loggedUser = userService.updateUser(loggedUser.getId(),preferencesDto);
-
         return "redirect:profile";
     }
 
@@ -148,7 +125,6 @@ public class IndexController {
     public String loginP(@ModelAttribute UserDto userDto){
         loggedUser = userService.findByName(userDto.getName());
         log.info("Logged user: " + loggedUser);
-
         if (loggedUser != null) {
             log.info("Logged user pref: " + loggedUser.getPreferencesDto());
             log.info("logged , redirecting to profile");
@@ -157,5 +133,18 @@ public class IndexController {
             log.info("not logged , redirecting to login");
             return "login";
         }
+    }
+
+    private List<List<HealthLabel>> getHealthLabelListToShow() {
+        HealthLabel[] arrayOfLabels = HealthLabel.values();
+        List<List<HealthLabel>> healthLabelListToShow = new ArrayList<>();
+        for (int i = 0; i < arrayOfLabels.length - 3; i+=3){         //divide list into 3 columns
+            List<HealthLabel> list = new ArrayList<>();
+            list.add(arrayOfLabels[i]);
+            list.add(arrayOfLabels[i+1]);
+            list.add(arrayOfLabels[i+2]);
+            healthLabelListToShow.add(list);
+        }
+        return healthLabelListToShow;
     }
 }

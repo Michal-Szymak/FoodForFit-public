@@ -30,20 +30,25 @@ class MealDistributorTest {
             recipes.add(recipe);
         }
     }
+    @Test
+    void test1(){
+        test(3,1500);
+    }
 
     boolean isInCaloriesDiff(int countCalories,int expectedCalories){
         return (countCalories > expectedCalories - CALORIES_DIFF) && (countCalories < expectedCalories + CALORIES_DIFF);
     }
 
     //TODO use parametrized test
-    @Test
-    @ParameterizedTest
+  //  @Test
+ //   @ParameterizedTest
     void test(int mealsPerDay,int caloriesPerDay){
         //given
         PreferencesDto preferencesDto = new PreferencesDto();
         preferencesDto.setCountMealsPerDay(mealsPerDay);
         preferencesDto.setCountCaloriesPerDay(caloriesPerDay);
-        MealDistributor mealDistributor = new MealDistributor(recipes,preferencesDto);
+        MealDistributor mealDistributor = new MealDistributor();
+        mealDistributor.setDataToCompute(recipes,preferencesDto);
 
 
         //when
