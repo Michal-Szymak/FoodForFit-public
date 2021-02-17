@@ -37,7 +37,6 @@ public class IndexController {
         this.recipeService = recipeService;
         this.mealDistributor = mealDistributor;
         this.propertiesConfiguration = propertiesConfiguration;
-        log.info("password = " + propertiesConfiguration.getPassword());
     }
 
 
