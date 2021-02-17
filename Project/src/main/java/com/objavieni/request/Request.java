@@ -1,27 +1,31 @@
 package com.objavieni.request;
 
+import com.objavieni.configuration.PropertiesConfiguration;
 import com.objavieni.dto.PreferencesDto;
 import com.objavieni.user.DietLabel;
 import com.objavieni.user.HealthLabel;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Component
+@RequiredArgsConstructor
 public class Request {
+
+    public final PropertiesConfiguration propertiesConfiguration;
+
     private static final String DIET_LABEL_KEY = "diet";
     private static final String HEALTH_LABEL_KEY = "healt";
     private static final String CALORIES_KEY = "calories";
     private static final int ACCEPTABLE_CALORIES_DIFFERENCE = 100;
-    private List<RequestParameter> searchCriteria = new ArrayList<>();
+    private List<RequestParameter> searchCriteria = new ArrayList<>(List.of(
+            new RequestParameter("app_id", "900da95e"),
+            new RequestParameter("app_key", "40698503668e0bb3897581f4766d77f9"),
+            new RequestParameter("q", "")));
     private int recipesToDownload = 100;
     private int offset = 0;
-
-    //TODO move keys of applciation to properties
-    public Request() {
-        searchCriteria.add(new RequestParameter("app_id", "900da95e"));
-        searchCriteria.add(new RequestParameter("app_key", "40698503668e0bb3897581f4766d77f9"));
-        searchCriteria.add(new RequestParameter("q", ""));
-    }
 
     public void addUserPreferences(PreferencesDto preferencesDto) {
         for (HealthLabel healthLabel : preferencesDto.getAllergies()) {

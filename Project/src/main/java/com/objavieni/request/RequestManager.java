@@ -1,12 +1,14 @@
 package com.objavieni.request;
 
 import org.apache.http.client.utils.URIBuilder;
+import org.springframework.stereotype.Component;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
 import java.util.Optional;
 
+@Component
 public class RequestManager {
 
     public Optional<String> getResponse(Request request) {
