@@ -13,6 +13,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//TODO decide if no args constructor is needed
 public class PreferencesDto {
 
     private UUID id;

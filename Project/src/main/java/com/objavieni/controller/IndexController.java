@@ -38,15 +38,16 @@ public class IndexController {
     private RecipeService setRecipeService(PreferencesDto preferencesDto) throws InvalidApiResponseException {
         log.info("setting service");
         RecipeService recipeService = new RecipeService(preferencesDto);
+        //TODO magic number to constant or preferences
         recipeService.setNumberOfRecipiesToBeDownloaded(1000);
-        log.info("service setted");
+        log.info("service set");
         return recipeService;
     }
 
     private MealDistributor setMealDistributor(List<Recipe> recipeList, PreferencesDto preferences) {
         log.info("setting distributor, recipe list size " + recipeList.size());
         MealDistributor mealDistributor = new MealDistributor(recipeList,preferences);
-        log.info("distributor setted");
+        log.info("distributor set");
         return mealDistributor;
     }
 
@@ -79,6 +80,7 @@ public class IndexController {
     public String getDiet(Model model){
         Arrays.asList(HealthLabel.values().clone());
         List<List<HealthLabel>> healthLabelListToShow = new ArrayList<>();
+        //TODO 3 = numberOfColumns
         for (int i = 0; i < HealthLabel.values().length - 3; i+=3){
             List<HealthLabel> list = new ArrayList<>();
             list.add(HealthLabel.values()[i]);
@@ -132,8 +134,8 @@ public class IndexController {
 
     @PostMapping("/registerUser")
     public String registerUser(UserDto userDto){
-        UserDto userDto1 = userService.saveUser(userDto);
-        if (userDto1 != null) {
+        UserDto savedUserDto = userService.saveUser(userDto);
+        if (savedUserDto != null) {
             log.info("registered, redirecting to login");
             return "redirect:login";
         } else {
