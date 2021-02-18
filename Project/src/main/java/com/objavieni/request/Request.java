@@ -34,13 +34,24 @@ public class Request {
             addSearchCriteria(DIET_LABEL_KEY, dietLabel.getDescription());
         }
         int caloriesPerMeal = preferencesDto.getCountCaloriesPerDay() / preferencesDto.getCountMealsPerDay();
-        addCalories(caloriesPerMeal, ACCEPTABLE_CALORIES_DIFFERENCE);
+//        addCalories(caloriesPerMeal, ACCEPTABLE_CALORIES_DIFFERENCE);
+        addCalories(caloriesPerMeal, calculateAcceptableCaloriesDifferencePerMeal(preferencesDto));
     }
 
-    private void addCalories(int expectedCalories, int acceptableDifference) {
-        String queryValue = (expectedCalories - acceptableDifference) + "-" + (expectedCalories + acceptableDifference);
+    private void addCalories(int expectedCalories, int acceptableDifferencePerMeal) {
+        String queryValue =
+                (expectedCalories - acceptableDifferencePerMeal) + "-" + (expectedCalories + acceptableDifferencePerMeal);
         removeOldCaloriesRequestParameter();
         addSearchCriteria(CALORIES_KEY, queryValue);
+    }
+
+    private int calculateAcceptableCaloriesDifferencePerMeal(PreferencesDto preferencesDto) {
+        if(preferencesDto.getCountMealsPerDay() <= 2) {
+            return propertiesConfiguration.getAcceptableCaloriesDifferencePerDay();
+        } else {
+            return propertiesConfiguration.getAcceptableCaloriesDifferencePerDay()
+                    / (preferencesDto.getCountMealsPerDay() - 2);
+        }
     }
 
     private void removeOldCaloriesRequestParameter() {

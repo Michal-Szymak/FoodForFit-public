@@ -14,5 +14,6 @@ public class PropertiesConfiguration {
     private String appID;
     private String appKey;
     private String query;
+    private int acceptableCaloriesDifferencePerDay;
 
 }
