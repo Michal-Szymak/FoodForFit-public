@@ -1,43 +1,25 @@
 package com.objavieni.request;
 
+import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 public class ResponseManager {
 
-    //TODO remove if not needed
-    public static List<String> getResponse(HttpRequest request) {
-        Optional<String> response = getResponseStringFromServer(request);
-        return response.isPresent() ? separateResponseToList(response.get()) : Collections.emptyList();
-    }
-
-    private static List<String> separateResponseToList(String response) {
-        List<String> result = new ArrayList<>();
-        String[] separatedResponse = response.split("\"recipe\"");
-        for (int i = 1; i < separatedResponse.length; i++) {
-            result.add(separatedResponse[i]);
-        }
-        return result;
-    }
-
-    //TODO change to logs
     public static Optional<String> getResponseStringFromServer(HttpRequest request) {
         try {
             HttpResponse<String> response = HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
             return Optional.of(response.body());
         } catch (IOException e) {
-            System.out.println(e.getClass().getName() + "occured");
+            log.info(e.getClass().getName() + "occured");
             return Optional.empty();
         } catch (InterruptedException e) {
-            System.out.println(e.getClass().getName() + "occured");
+            log.info(e.getClass().getName() + "occured");
             return Optional.empty();
         }
     }
-
 }
