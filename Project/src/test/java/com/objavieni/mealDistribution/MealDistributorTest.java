@@ -5,25 +5,24 @@ import com.objavieni.meals.DailyMeals;
 import com.objavieni.meals.Meal;
 import com.objavieni.meals.Recipe;
 import com.objavieni.meals.WeeklyMeals;
-import com.objavieni.user.Preferences;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
-@Slf4j
 class MealDistributorTest {
 
-    private final int CALORIES_DIFF = 200;
+    private static final int CALORIES_DIFF = 200;
+
     List<Recipe> recipes = new ArrayList<>();
+
     @BeforeEach
     void fillRecipeList(){
         for (int i = 0; i< 3000; i++){
@@ -31,38 +30,29 @@ class MealDistributorTest {
             recipes.add(recipe);
         }
     }
+    @Test
+    void test1(){
+        test(3,1500);
+    }
 
     boolean isInCaloriesDiff(int countCalories,int expectedCalories){
-        log.info("/////////////////////////////////////////" +
-                "///////////////////      "+ (expectedCalories - countCalories) );
-        if (countCalories > expectedCalories - CALORIES_DIFF
-                && countCalories < expectedCalories + CALORIES_DIFF){
-            return true;
-        }
-        return false;
+        return (countCalories > expectedCalories - CALORIES_DIFF) && (countCalories < expectedCalories + CALORIES_DIFF);
     }
 
-    @Test
-    void distributeProperMeals_givenProperRecipes(){
-
-        for (int i = 1; i < 5; i++){
-            test(i,i * 500);
-        }
-
-    }
-
-
-
-        void test(int mealsPerDay,int caloriesPerDay){
+    //TODO use parametrized test
+  //  @Test
+ //   @ParameterizedTest
+    void test(int mealsPerDay,int caloriesPerDay){
         //given
         PreferencesDto preferencesDto = new PreferencesDto();
         preferencesDto.setCountMealsPerDay(mealsPerDay);
         preferencesDto.setCountCaloriesPerDay(caloriesPerDay);
-        MealDistributor mealDistributor = new MealDistributor(recipes,preferencesDto);
+        MealDistributor mealDistributor = new MealDistributor();
+        mealDistributor.setDataToCompute(recipes,preferencesDto);
 
 
         //when
-        WeeklyMeals result =  mealDistributor.distributeThree();
+        WeeklyMeals result =  mealDistributor.distribute();
         boolean isCorrectQuantity = true;
         boolean isCorrectCalories = true;
         for (DailyMeals d : result.getDailyMealsList()) {
@@ -80,7 +70,5 @@ class MealDistributorTest {
         //then
         assertTrue(isCorrectQuantity);
         assertTrue(isCorrectCalories);
-
     }
-
 }

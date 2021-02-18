@@ -16,15 +16,10 @@ import java.util.UUID;
 public class PreferencesDto {
 
     private UUID id;
-
     private UserDto userDto;
-
     private List<HealthLabel> allergies = new ArrayList<>();
-
     private List<DietLabel> dietLabels = new ArrayList<>();
-
     private int countMealsPerDay;
-
     private int countCaloriesPerDay;
 
     public PreferencesDto( List<HealthLabel> allergies, List<DietLabel> dietLabels, int countMealsPerDay, int countCaloriesPerDay) {

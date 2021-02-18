@@ -1,7 +1,6 @@
 package com.objavieni.meals;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class WeeklyMeals{
@@ -17,13 +16,13 @@ public class WeeklyMeals{
 
     @Override
     public String toString() {
-        if(dailyMealsList.isEmpty())return "empty list";
         StringBuilder text = new StringBuilder();
         for (int i = 0; i < dailyMealsList.size(); i++) {
             text.append("\nDay " + i + " : " + dailyMealsList.get(i).toString() );
         }
         return text.toString();
     }
+
     public List<DailyMeals> getDailyMealsList() {
         return dailyMealsList;
     }

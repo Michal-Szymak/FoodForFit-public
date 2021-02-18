@@ -1,28 +1,32 @@
 package com.objavieni.request;
 
+import com.objavieni.configuration.PropertiesConfiguration;
 import com.objavieni.dto.PreferencesDto;
 import com.objavieni.user.DietLabel;
 import com.objavieni.user.HealthLabel;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Component
+@RequiredArgsConstructor
 public class Request {
+
+    public final PropertiesConfiguration propertiesConfiguration;
+
     private static final String DIET_LABEL_KEY = "diet";
+    //Not a typo! API uses "healt" as query key for Health Labels
     private static final String HEALTH_LABEL_KEY = "healt";
     private static final String CALORIES_KEY = "calories";
     private static final int ACCEPTABLE_CALORIES_DIFFERENCE = 100;
     private List<RequestParameter> searchCriteria = new ArrayList<>();
-    private int recipesToDownload = 10;
+    private int recipesToDownload = 100;
     private int offset = 0;
 
-    public Request() {
-        searchCriteria.add(new RequestParameter("app_id", "900da95e"));
-        searchCriteria.add(new RequestParameter("app_key", "40698503668e0bb3897581f4766d77f9"));
-        searchCriteria.add(new RequestParameter("q", ""));
-    }
-
     public void addUserPreferences(PreferencesDto preferencesDto) {
+
         for (HealthLabel healthLabel : preferencesDto.getAllergies()) {
             addSearchCriteria(HEALTH_LABEL_KEY, healthLabel.getDescription());
         }
@@ -30,13 +34,24 @@ public class Request {
             addSearchCriteria(DIET_LABEL_KEY, dietLabel.getDescription());
         }
         int caloriesPerMeal = preferencesDto.getCountCaloriesPerDay() / preferencesDto.getCountMealsPerDay();
-        addCalories(caloriesPerMeal, ACCEPTABLE_CALORIES_DIFFERENCE);
+//        addCalories(caloriesPerMeal, ACCEPTABLE_CALORIES_DIFFERENCE);
+        addCalories(caloriesPerMeal, calculateAcceptableCaloriesDifferencePerMeal(preferencesDto));
     }
 
-    private void addCalories(int expectedCalories, int acceptableDifference) {
-        String queryValue = (expectedCalories - acceptableDifference) + "-" + (expectedCalories + acceptableDifference);
+    private void addCalories(int expectedCalories, int acceptableDifferencePerMeal) {
+        String queryValue =
+                (expectedCalories - acceptableDifferencePerMeal) + "-" + (expectedCalories + acceptableDifferencePerMeal);
         removeOldCaloriesRequestParameter();
         addSearchCriteria(CALORIES_KEY, queryValue);
+    }
+
+    private int calculateAcceptableCaloriesDifferencePerMeal(PreferencesDto preferencesDto) {
+        if(preferencesDto.getCountMealsPerDay() <= 2) {
+            return propertiesConfiguration.getAcceptableCaloriesDifferencePerDay();
+        } else {
+            return propertiesConfiguration.getAcceptableCaloriesDifferencePerDay()
+                    / (preferencesDto.getCountMealsPerDay() - 2);
+        }
     }
 
     private void removeOldCaloriesRequestParameter() {
@@ -53,16 +68,20 @@ public class Request {
 
     public List<RequestParameter> getSearchCriteria() {
         List<RequestParameter> result = new ArrayList<>(searchCriteria);
+        loadBasicRequestParameters(result);
+        return result;
+    }
+
+    private void loadBasicRequestParameters(List<RequestParameter> result) {
+        result.add(new RequestParameter("app_id", propertiesConfiguration.getAppID()));
+        result.add(new RequestParameter("app_key", propertiesConfiguration.getAppKey()));
+        result.add(new RequestParameter("q", propertiesConfiguration.getQuery()));
         result.add(new RequestParameter("from", String.valueOf(offset)));
         result.add(new RequestParameter("to", String.valueOf(recipesToDownload + offset)));
-        return result;
     }
 
     public void setOffset(int offset) {
         this.offset = offset;
     }
 
-    public void setRecipesToDownload(int recipesToDownload) {
-        this.recipesToDownload = recipesToDownload;
-    }
 }

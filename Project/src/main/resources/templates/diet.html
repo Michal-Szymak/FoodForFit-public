@@ -1,88 +1,74 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="assets/css/style.css"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-</head>
-<body>
-<header>
-    <div class="container">
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link" href="/calendar">Calendar</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/profile">Profile</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/diet">Diet</a>
-            </li>
-        </ul>
-    </div>
-</header>
-<div class="container">
-    <form th:action="@{savePreferences}" th:object="${preferences}" method="post">
-    <table class="table table-striped">
-        <tr>
-            <td>
-                <p class="h3">Main</p>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link rel="stylesheet" href="assets/css/style.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/calendar">Calendar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/diet">Diet</a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <div class="container">
+            <form th:action="@{savePreferences}" th:object="${preferences}" method="post">
+            <table class="table table-striped">
+                <tr>
+                    <td>
+                        <p class="h3">Main</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Dily meals : </td>
+                    <td><input type="number" th:field="*{countMealsPerDay}"></td>
+                </tr>
+                <tr>
+                    <td>Dily calories : </td>
+                    <td><input type="number" th:field="*{countCaloriesPerDay}"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="h3">Health Labels</p>
+                    </td>
+                </tr>
+        <tr th:each="healthList : ${healthListsList}">
+            <td th:each="health : ${healthList}">
+                <input type="checkbox" th:field="*{allergies}" th:value="${health}" th:text="${health}"/>
             </td>
         </tr>
-        <tr>
+            <tr>
+                <td>
+                    <p class="h3">Diet Labels</p>
+                </td>
+            </tr>
+            <tr th:each="diet : ${diet}">
 
-            <td>Dily meals : </td>
-            <td><input type="number" th:field="*{countMealsPerDay}"></td>
-        </tr>
-        <tr>
-            <td>Dily calories : </td>
-            <td><input type="number" th:field="*{countCaloriesPerDay}"></td>
-        </tr>
+                <td>
+                    <!--                <input type="checkbox" th:checked="${preferences.addDietLabelToPreferences(LOW_SODIUM)}" th:field="${diet}" th:value="${diet}"/>-->
+                    <input type="checkbox" th:field="*{dietLabels}" th:value="${diet}" th:text="${diet}"/>
+                    <!--                <label th:text="${diet}" ></label>-->
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="submit">
+                </td>
+            </tr>
+            </table>
+            </form>
+        </div>
 
-        <tr>
-            <td>
-
-                <p class="h3">Health Labels</p>
-            </td>
-        </tr>
-<tr th:each="healthList : ${healthListsList}">
-    <td th:each="health : ${healthList}">
-        <input type="checkbox" th:field="*{allergies}" th:value="${health}" th:text="${health}"/>
-    </td>
-
-</tr>
-        <tr>
-            <td>
-                <p class="h3">Diet Labels</p>
-            </td>
-
-        </tr>
-<!--        <tr th:each="health,index : ${health}">-->
-<!--            <td>Health labels</td>-->
-<!--            <td>-->
-<!--                &lt;!&ndash;                    <input type="checkbox" th:checked="${preferences.addHealthLabelToPreferences('health')}" th:field="${health}" th:value="${health}"/>&ndash;&gt;-->
-<!--                <input type="checkbox" th:field="*{allergies}" th:value="${health}" th:text="${health}"/>-->
-
-<!--            </td>-->
-<!--        </tr>-->
-        <tr th:each="diet : ${diet}">
-
-            <td>
-                <!--                <input type="checkbox" th:checked="${preferences.addDietLabelToPreferences(LOW_SODIUM)}" th:field="${diet}" th:value="${diet}"/>-->
-                <input type="checkbox" th:field="*{dietLabels}" th:value="${diet}" th:text="${diet}"/>
-                <!--                <label th:text="${diet}" ></label>-->
-            </td>
-        </tr>
-
-        <tr>
-            <td>
-                <input type="submit" value="submit">
-            </td>
-        </tr>
-    </table>
-    </form>
-</div>
-
-</body>
+    </body>
 </html>

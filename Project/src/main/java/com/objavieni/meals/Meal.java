@@ -18,7 +18,7 @@ public class Meal{
     public Map<String,Integer> getMapOfNutrients(){
         Map<String,Integer> map = new HashMap<>();
         for (String s : recipe.getMapOfNutrients().keySet()){
-            map.put(s,recipe.getMapOfNutrients().get(s)/ recipe.getYield());
+            map.put(s, recipe.getMapOfNutrients().get(s) / recipe.getYield());
         }
         return map;
     }

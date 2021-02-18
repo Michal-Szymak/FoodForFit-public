@@ -13,7 +13,6 @@ public enum DietLabel {
     LOW_FAT("low-fat"),
     LOW_SODIUM("low-sodium");
 
-
     private final String description;
 
     DietLabel(String description) {

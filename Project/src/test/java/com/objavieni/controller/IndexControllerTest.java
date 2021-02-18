@@ -1,27 +1,17 @@
 package com.objavieni.controller;
 
-import com.objavieni.dto.PreferencesDto;
 import com.objavieni.dto.UserDto;
-import com.objavieni.meals.RecipeService;
-import com.objavieni.repository.UserRepository;
 import com.objavieni.service.UserService;
-import com.objavieni.user.Preferences;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 class IndexControllerTest {
-
-    @Mock
-    UserDto loggedUser;
 
     @Mock
     UserService userService;
