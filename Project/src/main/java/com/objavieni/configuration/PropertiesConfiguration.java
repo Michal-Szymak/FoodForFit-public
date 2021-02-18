@@ -11,5 +11,8 @@ import org.springframework.context.annotation.Configuration;
 public class PropertiesConfiguration {
 
     private String url;
+    private String appID;
+    private String appKey;
+    private String query;
 
 }

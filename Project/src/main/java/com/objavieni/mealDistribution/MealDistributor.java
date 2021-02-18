@@ -22,8 +22,6 @@ public class MealDistributor {
 
     public static final int DAYS_IN_WEEK = 7;
     public static final int ACCEPTABLE_CALORIES_DIFF = 100;
-    @Value("${diff}")
-    String diff;
     private List<Meal> mealList;
     private PreferencesDto preferences;
     private WeeklyMeals weeklyMeals;
@@ -46,7 +44,6 @@ public class MealDistributor {
 
         getDailyMealsForWeek(weeklyMeals, acceptableMeals);
         printWeeklyMealsLog(weeklyMeals);
-        log.info("/////////  Diff = " + diff);
         return weeklyMeals;
     }
 

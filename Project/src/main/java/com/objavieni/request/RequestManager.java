@@ -15,6 +15,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RequestManager {
 
+    private final PropertiesConfiguration propertiesConfiguration;
+
     public Optional<String> getResponse(Request request) {
         Optional<HttpRequest> httpRequestOptional = createHttpRequest(request);
         if(httpRequestOptional.isPresent()) {
@@ -22,7 +24,7 @@ public class RequestManager {
         } else return Optional.empty();
     }
 
-    private static Optional<HttpRequest> createHttpRequest(Request request) {
+    private Optional<HttpRequest> createHttpRequest(Request request) {
         try {
             HttpRequest result = HttpRequest.newBuilder(createRequestURI(request)).GET().build();
             return Optional.of(result);
@@ -37,10 +39,8 @@ public class RequestManager {
         }
     }
 
-    private static URI createRequestURI(Request request) throws URISyntaxException {
-        //TODO move uri to properties
-
-        URIBuilder uriBuilder = new URIBuilder("https://api.edamam.com/search");
+    private URI createRequestURI(Request request) throws URISyntaxException {
+        URIBuilder uriBuilder = new URIBuilder(propertiesConfiguration.getUrl());
         for (RequestParameter searchCriterion : request.getSearchCriteria()) {
             uriBuilder.addParameter(searchCriterion.getKey(), searchCriterion.getValue());
         }
