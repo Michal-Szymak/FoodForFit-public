@@ -1,6 +1,5 @@
 package com.objavieni.request;
 
-import com.objavieni.configuration.MyConfiguration;
 import com.objavieni.configuration.PropertiesConfiguration;
 import com.objavieni.dto.PreferencesDto;
 import com.objavieni.user.DietLabel;
