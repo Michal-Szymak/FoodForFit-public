@@ -49,6 +49,9 @@ public class User implements UserDetails {
         this.gender = gender;
         this.age = age;
         this.preferences = preferences;
+        ///////
+        this.role="ROLE_USER";
+        this.password="haslo";
     }
 
     public String getName() {
@@ -63,8 +66,16 @@ public class User implements UserDetails {
         return gender;
     }
 
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public int getAge() {
         return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public Preferences getPreferences() {
@@ -76,11 +87,6 @@ public class User implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role));
-    }
-
-    @Override
     public String getPassword() {
         return password;
     }
@@ -89,25 +95,22 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    @Override
-    public String getUsername() {
-        return name;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role));
+    }
+
+    @Override
+    public String getUsername() {
+        return name;
     }
 
     @Override

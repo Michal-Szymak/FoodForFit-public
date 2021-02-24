@@ -8,6 +8,9 @@ import com.objavieni.user.Preferences;
 import com.objavieni.user.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,7 +23,7 @@ import static com.objavieni.functions.UserFunction.userToDto;
 @AllArgsConstructor
 @Service
 @Slf4j
-public class UserService {
+public class UserService implements UserDetailsService  {
 
     public final UserRepository userRepository;
 
@@ -41,10 +44,17 @@ public class UserService {
 
     @Transactional
     public UserDto findByName(String name) {
-        User user = userRepository.findByName(name);
+        User user = userRepository.findByName(name).orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
         if (user.getPreferences() == null) {
             user.setPreferences(new Preferences());
         }
         return userToDto.apply(user);
+    }
+
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return userRepository.findByName(s)
+                .orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
     }
 }

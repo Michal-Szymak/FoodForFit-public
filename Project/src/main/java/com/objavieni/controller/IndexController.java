@@ -11,6 +11,7 @@ import com.objavieni.meals.RecipeService;
 import com.objavieni.service.UserService;
 import com.objavieni.user.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,7 +55,8 @@ public class IndexController {
     }
 
     @GetMapping("/profile")
-    public String getProfile(Model model){
+    public String getProfile(Model model, @AuthenticationPrincipal User user){
+        log.warn("PRINCIPAL: " + user.getUsername());
         log.info("Logged user: " + loggedUser.toString());
         log.info(model.toString());
         model.addAttribute("user", loggedUser);

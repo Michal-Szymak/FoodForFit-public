@@ -1,7 +1,6 @@
 package com.objavieni.configuration;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -16,12 +15,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/register","/login","/","/css/**").permitAll()
+                .antMatchers("/register","/registerUser", "/login","/loginUser","/css/**").permitAll()
+                .antMatchers("/profile").hasRole("USER")
                 .anyRequest().authenticated()
+//                .and()
+//                .formLogin().defaultSuccessUrl("/profile")
                 .and()
-                .formLogin().defaultSuccessUrl("/profile")
+                .logout().logoutSuccessUrl("/login")
                 .and()
-                .logout().logoutSuccessUrl("/login");
+                .csrf().disable();
     }
 
 //    @Override
