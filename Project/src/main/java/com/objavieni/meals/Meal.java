@@ -4,28 +4,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Meal{
+public class Meal {
     Recipe recipe;
 
     public Meal(Recipe recipe) {
         this.recipe = recipe;
     }
 
-    public int getCalories(){
+    public int getCalories() {
         return recipe.getCaloriesPerMeal();
     }
 
-    public Map<String,Integer> getMapOfNutrients(){
-        Map<String,Integer> map = new HashMap<>();
-        for (String s : recipe.getMapOfNutrients().keySet()){
+    public Map<String, Integer> getMapOfNutrients() {
+        Map<String, Integer> map = new HashMap<>();
+        for (String s : recipe.getMapOfNutrients().keySet()) {
             map.put(s, recipe.getMapOfNutrients().get(s) / recipe.getYield());
         }
         return map;
     }
-    public List<String> getDietLabels(){
+
+    public List<String> getDietLabels() {
         return recipe.getMapOfLabels().get("Diet Labels");
     }
-    public List<String> getIngredients(){
+
+    public List<String> getIngredients() {
         return recipe.getMapOfLabels().get("Ingredients");
     }
 
@@ -34,11 +36,13 @@ public class Meal{
         return "Meal : " + recipe.getName()
                 + ", calories = "
                 + getCalories() + ", nutrients : "
-                + getMapOfNutrients();
+                + getMapOfNutrients()
+                + getDietLabels();
+
     }
 
-    public Boolean isInCaloricDiff(int caloriesDiff,int caloriesPerDay){
-        if ((getCalories() > (caloriesPerDay - caloriesDiff)) && (getCalories() < (caloriesPerDay + caloriesDiff))){
+    public Boolean isInCaloricDiff(int caloriesDiff, int caloriesPerDay) {
+        if ((getCalories() > (caloriesPerDay - caloriesDiff)) && (getCalories() < (caloriesPerDay + caloriesDiff))) {
             return true;
         }
         return false;
@@ -47,10 +51,12 @@ public class Meal{
     public Recipe getRecipe() {
         return recipe;
     }
-    public String getName(){
+
+    public String getName() {
         return recipe.getName();
     }
-    public String getImageSource(){
-        return  recipe.getImgSrc();
+
+    public String getImageSource() {
+        return recipe.getImgSrc();
     }
 }

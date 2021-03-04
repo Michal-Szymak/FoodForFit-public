@@ -91,9 +91,13 @@ public class MealDistributor {
     private void printWeeklyMealsLog(WeeklyMeals weeklyMeals) {
         for (DailyMeals dailyMeals : weeklyMeals.getDailyMealsList()) {
             int totalCalories = 0;
+            ////////////////////////////
             log.info("DAILY MEALS ");
+            /////////////////////////////
+
             for (Meal meal : dailyMeals.getMealList()) {
                 log.info(meal.getName() + ": " + meal.getCalories() + " calories.");
+                log.info(meal.toString());
                 totalCalories += meal.getCalories();
             }
             log.info("Total calories: " + totalCalories);
